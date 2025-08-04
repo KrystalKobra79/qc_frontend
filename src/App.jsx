@@ -1,3 +1,4 @@
+// IT IS COMPLETE
 
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./Home/Home";
@@ -6,6 +7,8 @@ import About from "./About/About";
 import Courses from "./Courses/Courses";
 import NotFoundPage from "./NotFoundPage/NotFoundPage";
 import NavBar from "./NavBar/NavBar";
+
+import "./App.scss";
 
 function App() {
   return (

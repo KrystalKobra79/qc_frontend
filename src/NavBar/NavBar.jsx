@@ -1,13 +1,17 @@
+// IT IS COMPLETE
+
 import React, { useState, useEffect, useRef } from 'react';
 import { NavLink } from 'react-router-dom';
 import {
   FaHome,
+  FaBookOpen,
   FaUserAlt,
   FaEnvelope,
   FaMoon,
   FaSun,
   FaBars,
-  FaTimes, // ✅ Import cross icon
+  FaTimes,
+  FaInfoCircle, // ✅ Import cross icon
 } from 'react-icons/fa';
 import './NavBar.scss';
 
@@ -64,7 +68,7 @@ const NavBar = () => {
       <header className="navbar">
         <div className="navbar__container">
           <div className="navbar__logo">
-            <NavLink to="/">MySite</NavLink>
+            <NavLink to="/">Quantum Classes</NavLink>
           </div>
 
           <nav
@@ -75,11 +79,18 @@ const NavBar = () => {
               <FaHome />
               Home
             </NavLink>
+
+            <NavLink to="/courses" onClick={() => setIsMenuOpen(false)}>
+              <FaBookOpen />
+              Courses
+            </NavLink>
+
             <NavLink to="/about" onClick={() => setIsMenuOpen(false)}>
-              <FaUserAlt />
+              <FaInfoCircle />
               About
             </NavLink>
-            <NavLink to="/contact" onClick={() => setIsMenuOpen(false)}>
+
+            <NavLink to="/enquiry" onClick={() => setIsMenuOpen(false)}>
               <FaEnvelope />
               Contact
             </NavLink>
