@@ -1,6 +1,4 @@
-// IT IS COMPLETE
-
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { NavLink } from 'react-router-dom';
 import {
   FaHome,
@@ -11,21 +9,15 @@ import {
   FaSun,
   FaBars,
   FaTimes,
-  FaInfoCircle, // ✅ Import cross icon
+  FaInfoCircle,
 } from 'react-icons/fa';
 import './NavBar.scss';
 
-const NavBar = () => {
-  const [isDarkMode, setIsDarkMode] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+const NavBar = ({ isDarkMode, toggleTheme }) => {
+  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const navRef = useRef();
 
-  // Toggle dark mode
-  const toggleTheme = () => {
-    setIsDarkMode(prev => !prev);
-  };
-
-  // Apply theme class to body
+  // Apply theme class to body via props
   useEffect(() => {
     if (isDarkMode) {
       document.body.classList.add('dark-mode');
@@ -50,7 +42,6 @@ const NavBar = () => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [isMenuOpen]);
 
-  // Toggle menu
   const toggleMenu = () => {
     setIsMenuOpen(prev => !prev);
   };
@@ -67,10 +58,12 @@ const NavBar = () => {
 
       <header className="navbar">
         <div className="navbar__container">
+          {/* Logo */}
           <div className="navbar__logo">
             <NavLink to="/">Quantum Classes</NavLink>
           </div>
 
+          {/* Navigation Links */}
           <nav
             className={`navbar__links ${isMenuOpen ? 'open' : ''}`}
             ref={navRef}
@@ -96,6 +89,7 @@ const NavBar = () => {
             </NavLink>
           </nav>
 
+          {/* Actions */}
           <div className="navbar__actions">
             <div className="theme-switch" onClick={toggleTheme}>
               {isDarkMode ? <FaSun /> : <FaMoon />}

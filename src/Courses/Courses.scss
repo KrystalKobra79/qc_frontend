@@ -1,0 +1,271 @@
+/* ==========================================================================
+   GLOBAL VARIABLES
+========================================================================== */
+$color-light-bg: blanchedalmond;
+$color-dark-bg: #1e1e1e;
+
+$color-light-text: #f5f5f5;
+$color-dark-text: #1a1a1a;
+
+$color-glow: #66aaff;
+$color-border: #cccccc;
+
+$transition-speed: 0.3s;
+$blur-background: rgba(0, 0, 0, 0.2);
+
+$radius: 12px;
+
+
+/* ==========================================================================
+   THEME VARIABLE MAPPING
+========================================================================== */
+:root {
+  --bg: #{$color-light-bg};
+  --text: #{$color-dark-text};
+  --primary: #{$color-glow};
+  --border: #{$color-border};
+  --card: #ffffff;
+  --shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.theme-dark {
+  --bg: #{$color-dark-bg};
+  --text: #{$color-light-text};
+  --primary: #{$color-glow};
+  --border: darken($color-border, 25%);
+  --card: #2b2b2b;
+  --shadow: 0 4px 8px rgba(255, 255, 255, 0.05);
+}
+.theme-light {
+  --bg: #{$color-light-bg};
+  --text: #{$color-dark-text};
+  --primary: #{$color-glow};
+  --border: #{$color-border};
+  --card: #ffffff;
+  --shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+
+/* ==========================================================================
+   MIXINS
+========================================================================== */
+@mixin theme-bg {
+  background-color: var(--bg);
+}
+@mixin theme-text {
+  color: var(--text);
+}
+@mixin theme-border {
+  border-color: var(--border);
+}
+@mixin card {
+  border-radius: $radius;
+  padding: 1rem;
+  border: 1px solid;
+  @include theme-border;
+  background-color: var(--card);
+  box-shadow: var(--shadow);
+  transition: all $transition-speed ease;
+}
+
+
+
+/* ==========================================================================
+   DASHBOARD STYLES
+========================================================================== */
+.courses-dashboard {
+  @include theme-bg;
+  @include theme-text;
+  min-height: 100vh;
+  padding: 2rem;
+  font-family: 'Inter', sans-serif;
+  transition: all $transition-speed ease;
+
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 2rem;
+
+  /* ================= Sidebar ================= */
+  &__sidebar {
+    @include card;
+    position: sticky;
+    top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+
+    h2 {
+      font-size: 1.2rem;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+    }
+
+    nav {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+
+      a {
+        padding: 0.5rem 1rem;
+        border-radius: $radius;
+        text-decoration: none;
+        color: inherit;
+        transition: background $transition-speed;
+
+        &:hover {
+          background-color: rgba(0, 0, 0, 0.05);
+        }
+      }
+    }
+  }
+
+  /* ================= Header ================= */
+  &__header {
+    grid-column: span 2;
+    margin-bottom: 1rem;
+
+    h1 {
+      font-size: 2rem;
+      font-weight: 600;
+      border-left: 4px solid var(--primary);
+      padding-left: 1rem;
+    }
+  }
+
+  /* ================= Stats ================= */
+  &__stats {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+
+    &-card {
+      @include card;
+      flex: 1 1 200px;
+      text-align: center;
+
+      .value {
+        font-size: 1.8rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        color: var(--primary);
+      }
+
+      .label {
+        font-size: 0.95rem;
+        opacity: 0.85;
+      }
+    }
+  }
+
+  /* ================= Course Cards ================= */
+  &__courses-list {
+    margin-top: 2rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+  }
+
+  &__card {
+    @include card;
+    position: relative;
+    transition: transform $transition-speed;
+
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 0 15px $color-glow;
+    }
+
+    &-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+    }
+
+    p {
+      font-size: 0.9rem;
+      opacity: 0.85;
+    }
+
+    .progress-bar {
+      margin-top: 1rem;
+      height: 8px;
+      background-color: var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+
+      &__filled {
+        height: 100%;
+        background-color: var(--primary);
+        transition: width $transition-speed;
+      }
+    }
+  }
+
+  /* ================= Popular Courses ================= */
+  &__popular {
+    grid-column: span 2;
+    margin-top: 3rem;
+
+    h3 {
+      font-size: 1.4rem;
+      margin-bottom: 1rem;
+      color: var(--primary);
+    }
+
+    .highlight-box {
+      @include card;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+
+      .highlight-title {
+        font-weight: 600;
+      }
+
+      .highlight-progress {
+        font-size: 0.85rem;
+        opacity: 0.75;
+      }
+    }
+  }
+
+  /* ==========================================================================
+     RESPONSIVE BREAKPOINTS
+  ========================================================================== */
+
+  // -------- Mobile --------
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+
+    &__sidebar {
+      flex-direction: row;
+      overflow-x: auto;
+      nav {
+        flex-direction: row;
+      }
+    }
+
+    &__header h1 {
+      font-size: 1.5rem;
+    }
+
+    &__stats {
+      flex-direction: column;
+    }
+  }
+
+  // -------- Tablet --------
+  @media (min-width: 601px) and (max-width: 1024px) {
+    grid-template-columns: 180px 1fr;
+  }
+
+  // -------- Laptop --------
+  @media (min-width: 1025px) and (max-width: 1440px) {
+    grid-template-columns: 200px 1fr;
+  }
+
+  // -------- Desktop --------
+  @media (min-width: 1441px) {
+    grid-template-columns: 240px 1fr;
+  }
+}
