@@ -1,308 +1,280 @@
-// =============================
-// === COLOR VARIABLES ===
-// =============================
+// ==============================
+// Theme Variables
+// ==============================
 $color-light-bg: blanchedalmond;
 $color-dark-bg: #1e1e1e;
-
-$color-light-text: #1a1a1a;
-$color-dark-text: #f5f5f5;
-
-$color-border: #cccccc;
+$color-light-text: #f5f5f5;
+$color-dark-text: #1a1a1a;
 $color-glow: #66aaff;
-
+$color-border: #cccccc;
 $transition-speed: 0.3s;
 $blur-background: rgba(0, 0, 0, 0.2);
 
-// =============================
-// === BASE STYLES ===
-// =============================
-.enquiry-page {
-  position: relative;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  padding: 2rem;
-  min-height: 100vh;
-  background-color: var(--page-bg);
-  color: var(--text-color);
-  transition: background-color $transition-speed, color $transition-speed;
-  overflow-x: hidden;
+$border-radius: 0.5rem;
+$font-stack: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 
-  // Static themed SVG Blobs
-  .blob {
-    position: absolute;
-    width: 300px;
-    height: 300px;
-    z-index: 0;
-    opacity: 0.2;
-    pointer-events: none;
-
-    &.blob-1 {
-      top: -80px;
-      left: -60px;
-      color: var(--blob-color);
-    }
-
-    &.blob-2 {
-      bottom: -80px;
-      right: -60px;
-      color: var(--blob-color);
-    }
-  }
-}
-
-// =============================
-// === LEFT SECTION ===
-// =============================
-.enquiry-left {
-  flex: 1;
-  padding: 2rem;
-  z-index: 1;
-
-  h1 {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-    text-shadow: 0px 3px 6px rgba(0, 0, 0, 0.3);
-  }
-
-  p {
-    font-size: 1.2rem;
-    line-height: 1.6;
-    text-shadow: 0px 3px 5px rgba(0, 0, 0, 0.25);
-  }
-}
-
-// =============================
-// === RIGHT SECTION (FORM) ===
-// =============================
-.enquiry-right {
-  flex: 1;
-  padding: 2rem;
-  z-index: 1;
-
-  .form-wrapper {
-    border: 2px solid var(--border-color);
-    border-radius: 12px;
-    padding: 2rem;
-    background-color: var(--form-bg);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
-    transition: background-color $transition-speed, border-color $transition-speed;
-  }
-
-  .enquiry-form {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-
-    .form-group {
-      display: flex;
-      flex-direction: column;
-
-      label {
-        font-weight: bold;
-        margin-bottom: 0.5rem;
-      }
-
-      .input-icon {
-        display: flex;
-        align-items: center;
-        background-color: var(--input-bg);
-        border: 1px solid var(--border-color);
-        border-radius: 8px;
-        padding: 0.5rem;
-        transition: background-color $transition-speed;
-
-        .icon {
-          margin-right: 0.5rem;
-          color: var(--text-color);
-        }
-
-        input,
-        textarea {
-          flex: 1;
-          background: transparent;
-          border: none;
-          outline: none;
-          font-size: 1rem;
-          color: var(--text-color);
-
-          &::placeholder {
-            color: rgba(128, 128, 128, 0.7);
-          }
-        }
-      }
-
-      .error-message {
-        font-size: 0.875rem;
-        color: red;
-        margin-top: 0.25rem;
-      }
-
-      // Validation classes
-      .valid {
-        border: 2px solid green;
-      }
-
-      .error {
-        border: 2px solid red;
-      }
-    }
-
-    .submit-btn {
-      padding: 0.75rem 1.5rem;
-      background-color: var(--text-color);
-      color: var(--page-bg);
-      border: none;
-      border-radius: 8px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: background-color $transition-speed;
-
-      &:hover {
-        background-color: $color-glow;
-        color: white;
-      }
-    }
-  }
-}
-
-// =============================
-// === MODAL STYLES ===
-// =============================
-.modal-backdrop {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  backdrop-filter: blur(6px);
-  background-color: $blur-background;
+// ==============================
+// Mixins
+// ==============================
+@mixin flex-center {
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 99;
+}
 
-  .modal {
-    background-color: var(--modal-bg);
-    padding: 2rem;
-    border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-    text-align: center;
-    max-width: 400px;
-    width: 90%;
-    transition: background-color $transition-speed;
+@mixin input-style {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid $color-border;
+  border-radius: $border-radius;
+  font-size: 1rem;
+  outline: none;
+  box-sizing: border-box;
+  transition: border $transition-speed, box-shadow $transition-speed;
 
-    h2 {
-      margin-bottom: 1rem;
-    }
+  &:focus {
+    border-color: $color-glow;
+    box-shadow: 0 0 5px $color-glow;
+  }
 
-    p {
-      margin-bottom: 1.5rem;
-    }
+  &.error {
+    border-color: red;
+  }
 
-    .modal-btn {
-      padding: 0.5rem 1.2rem;
-      background-color: var(--text-color);
-      color: var(--page-bg);
-      border: none;
-      border-radius: 6px;
-      font-weight: bold;
-      cursor: pointer;
-
-      &:hover {
-        background-color: $color-glow;
-        color: white;
-      }
-    }
+  &.valid {
+    border-color: green;
   }
 }
 
-// =============================
-// === THEME CLASSES ===
-// =============================
-.light-mode {
-  --page-bg: $color-light-bg;
-  --text-color: $color-dark-text;
-  --form-bg: #fffaf1;
-  --modal-bg: #fff;
-  --border-color: $color-border;
-  --input-bg: #fff;
-  --blob-color: #f9d3b4;
+@mixin button-style {
+  background-color: $color-glow;
+  color: $color-dark-text;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: $border-radius;
+  cursor: pointer;
+  transition: background-color $transition-speed;
+
+  &:hover {
+    background-color: darken($color-glow, 10%);
+  }
 }
 
-.dark-mode {
-  --page-bg: $color-dark-bg;
-  --text-color: $color-light-text;
-  --form-bg: #2b2b2b;
-  --modal-bg: #2a2a2a;
-  --border-color: #666;
-  --input-bg: #1a1a1a;
-  --blob-color: #4a4a4a;
-}
-
-// =============================
-// === ENTRY ANIMATIONS ===
-// =============================
-.animated {
-  opacity: 0;
-  transform: translateY(30px);
-  animation: riseUp 0.6s ease forwards;
-}
-
-.delay-1 {
-  animation-delay: 0.3s;
-}
-.delay-2 {
-  animation-delay: 0.6s;
-}
-
-@keyframes riseUp {
-  to {
+// ==============================
+// Animations
+// ==============================
+@keyframes fadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  100% {
     opacity: 1;
     transform: translateY(0);
   }
 }
 
-// =============================
-// === MEDIA QUERIES ===
-// =============================
+.animated {
+  opacity: 0;
+  animation: fadeUp 0.6s ease-out forwards;
 
-// === MOBILE (< 600px) ===
-@media (max-width: 600px) {
-  .enquiry-page {
-    flex-direction: column;
-    padding: 1rem;
+  &.delay-1 {
+    animation-delay: 0.2s;
   }
-
-  .enquiry-left,
-  .enquiry-right {
-    padding: 1rem;
+  &.delay-2 {
+    animation-delay: 0.4s;
+  }
+  &.delay-3 {
+    animation-delay: 0.6s;
   }
 }
 
-// === TABLET (600px – 992px) ===
-@media (min-width: 601px) and (max-width: 992px) {
-  .enquiry-page {
-    flex-direction: column;
+// ==============================
+// Layout
+// ==============================
+.enquiry-page {
+  display: flex;
+  flex-direction: row;
+  min-height: 100vh;
+  font-family: $font-stack;
+  overflow-x: hidden;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color $transition-speed, color $transition-speed;
+
+  .enquiry-left,
+  .enquiry-right {
+    flex: 1;
     padding: 2rem;
+    @include flex-center;
+    flex-direction: column;
+    box-sizing: border-box;
   }
 
-  .enquiry-left,
+  .enquiry-left {
+    text-align: center;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2); // Floating effect
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      font-size: 1.1rem;
+      max-width: 400px;
+    }
+  }
+
   .enquiry-right {
-    padding: 1.5rem;
+    .form-wrapper {
+      width: 100%;
+      max-width: 500px;
+      padding: 2rem;
+      background-color: var(--bg-color);
+      border: 2px solid $color-border;
+      border-radius: $border-radius;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      box-sizing: border-box;
+      transition: background-color $transition-speed, border-color $transition-speed;
+    }
   }
 }
 
-// === LAPTOP (992px – 1200px) ===
-@media (min-width: 993px) and (max-width: 1200px) {
-  .enquiry-page {
-    padding: 2.5rem 4rem;
+// ==============================
+// Form Styling
+// ==============================
+.enquiry-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  width: 100%;
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    box-sizing: border-box;
+
+    label {
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+
+    input,
+    textarea {
+      @include input-style;
+      background-color: transparent;
+      color: var(--text-color);
+    }
+
+    .input-icon {
+      position: relative;
+
+      input,
+      textarea {
+        padding-left: 2.5rem;
+      }
+
+      .icon {
+        position: absolute;
+        top: 50%;
+        left: 0.75rem;
+        transform: translateY(-50%);
+        font-size: 1.2rem;
+        color: $color-glow;
+      }
+    }
+
+    .error-message {
+      margin-top: 0.25rem;
+      color: red;
+      font-size: 0.9rem;
+    }
+  }
+
+  .submit-btn {
+    @include button-style;
+    width: 100%;
   }
 }
 
-// === DESKTOP (> 1200px) ===
-@media (min-width: 1201px) {
+// ==============================
+// Modal Styling
+// ==============================
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  backdrop-filter: blur(6px);
+  background-color: $blur-background;
+  z-index: 999;
+  @include flex-center;
+
+  .modal {
+    background: var(--bg-color);
+    padding: 2rem;
+    border-radius: $border-radius;
+    text-align: center;
+    max-width: 400px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    color: var(--text-color);
+    border: 2px solid $color-border;
+  }
+}
+
+// ==============================
+// Media Queries (Breakpoints)
+// ==============================
+
+@media (min-width: 1200px) {
+  .enquiry-left h1 {
+    font-size: 2.5rem;
+  }
+}
+
+@media (max-width: 1199px) and (min-width: 1024px) {
+  .enquiry-left h1 {
+    font-size: 2.2rem;
+  }
+
+  .form-wrapper {
+    padding: 1.75rem;
+  }
+}
+
+@media (max-width: 1023px) and (min-width: 768px) {
   .enquiry-page {
-    padding: 4rem 6rem;
+    flex-direction: column;
+  }
+
+  .form-wrapper {
+    max-width: 90%;
+    margin: auto;
+  }
+}
+
+@media (max-width: 767px) {
+  .enquiry-page {
+    flex-direction: column;
+  }
+
+  .enquiry-left h1 {
+    font-size: 1.8rem;
+  }
+
+  .form-wrapper {
+    max-width: 95%;
+    margin: 0 auto;
+    padding: 1.25rem;
+  }
+
+  .submit-btn {
+    font-size: 1rem;
+    padding: 0.75rem;
   }
 }
