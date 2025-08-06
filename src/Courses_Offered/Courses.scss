@@ -4,10 +4,13 @@
 $color-primary: #007bff;
 $color-glow: #66aaff;
 $color-border: #cccccc;
-$color-text-light: #f5f5f5;
+
+$color-text-light: blanchedalmond;
 $color-text-dark: #1a1a1a;
-$color-bg-light: #ffffff;
+
+$color-bg-light: rgb(252, 199, 131);
 $color-bg-dark: #1e1e1e;
+
 $radius-md: 6px;
 $transition-speed: 0.3s;
 
@@ -98,7 +101,7 @@ $bp-desktop: 1280px;
 
 .fm-student-courses {
   padding: 2rem;
-  background-color: $color-bg-light;
+  background-color: $color-text-light;
   color: $color-text-dark;
   transition: background-color $transition-speed, color $transition-speed;
 
@@ -145,14 +148,15 @@ $bp-desktop: 1280px;
       flex: 1;
     }
 
+    // Search Box
     .course-search {
       flex: 1;
       max-width: 290px;
       padding: 0.5rem 1rem;
       font-size: 1rem;
-      border: 1px solid $color-border;
+      border: 3px solid $color-border;
       border-radius: $radius-md;
-      background-color: $color-bg-light;
+      background-color: $color-text-light;
       color: $color-text-dark;
 
       &::placeholder {

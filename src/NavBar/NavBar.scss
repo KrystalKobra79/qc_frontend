@@ -180,21 +180,34 @@ body.dark-mode .navbar {
 
       width: 75%;
       height: calc(100vh - 64px);
+
       flex-direction: column;
       align-items: flex-start;
-      padding: 1.5rem;
-      display: none;
 
+      padding: 1.5rem;
+
+      display: none;
       background: $color-dark-bg;
       color: $color-light-text;
-
       border-left: 1px solid $color-border;
       border-top: 1px solid $color-border;
-      z-index: 1001;
+      z-index: 1021;
 
       &.open {
+        font-size: large;
+        width: 50vw;
+        max-width: 50vw;
+        height: 50vh;
+
         display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-evenly;
+
         animation: slideInRight 0.4s ease-out;
+
+        border: 2px solid $color-glow;
+        border-radius: 15px;
       }
 
       a {
@@ -229,7 +242,6 @@ body.dark-mode .navbar {
 
       width: 50%;
       height: calc(100vh - 64px);
-      
       
       padding: 1.5rem;
 

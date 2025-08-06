@@ -1,323 +1,308 @@
-// ==============================
-// Root Theme Variables (CSS Custom Properties)
-// ==============================
+// =============================
+// === COLOR VARIABLES ===
+// =============================
+$color-light-bg: blanchedalmond;
+$color-dark-bg: #1e1e1e;
 
-:root[data-theme='light'] {
-  --bg-color-modal : bisque;
-  --bg-color: blanchedalmond;
-  --text-color: #090909;
-  --border-color: #666666;
-  --box-shadow: rgba(0, 0, 0, 0.95);
-}
+$color-light-text: #1a1a1a;
+$color-dark-text: #f5f5f5;
 
-:root[data-theme='dark'] {
-  --bg-color-modal : #090909;
-  --bg-color: #1e1e1e;
-  --text-color: bisque;
-  --border-color:  #cccccc;
-  --box-shadow: rgba(255, 225, 196, 0.95);
-}
-
-// ==============================
-// SCSS Theme Variables (for mixins, etc.)
-// ==============================
+$color-border: #cccccc;
 $color-glow: #66aaff;
+
 $transition-speed: 0.3s;
 $blur-background: rgba(0, 0, 0, 0.2);
 
-$border-radius: 0.5rem;
-$font-stack: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-
-// ==============================
-// Mixins
-// ==============================
-@mixin flex-center {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-@mixin input-style {
-  width: 100%;
-  padding: 0.75rem;
-
-  border-width: 2px;
-  border-style: solid;
-  border-color: var(--border-color);
-  border-radius: $border-radius;
-
-  font-size: 1.25rem;
-  outline: none;
-  box-sizing: border-box;
-  transition: border $transition-speed, box-shadow $transition-speed;
-
-  &:focus {
-    border-color: $color-glow;
-    box-shadow: 0 0 5px $color-glow;
-  }
-
-  &.error {
-    border-color: red;
-  }
-}
-
-@mixin button-style {
-  background-color: $color-glow;
-  color: var(--text-color);
-  border: none;
-  padding: 0.75rem 1.5rem;
-  font-size: 1rem;
-  font-weight: bold;
-  border-radius: $border-radius;
-  cursor: pointer;
-  transition: background-color $transition-speed;
-
-  &:hover {
-    background-color: darken($color-glow, 5%);
-
-    //box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.5);
-
-  }
-}
-
-// ==============================
-// Layout
-// ==============================
+// =============================
+// === BASE STYLES ===
+// =============================
 .enquiry-page {
+  position: relative;
   display: flex;
-  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 2rem;
   min-height: 100vh;
-  font-family: $font-stack;
-  overflow-x: hidden;
-  background-color: var(--bg-color);
+  background-color: var(--page-bg);
   color: var(--text-color);
   transition: background-color $transition-speed, color $transition-speed;
+  overflow-x: hidden;
 
-  .enquiry-left,
-  .enquiry-right {
-    flex: 1;
-    padding: 2rem;
-    @include flex-center;
-    flex-direction: column;
-    box-sizing: border-box;
-  }
+  // Static themed SVG Blobs
+  .blob {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    z-index: 0;
+    opacity: 0.2;
+    pointer-events: none;
 
-  .enquiry-left {
-    text-align: center;
-
-    h1 {
-      font-size: 2.5rem;
-      margin-bottom: 1rem;
+    &.blob-1 {
+      top: -80px;
+      left: -60px;
+      color: var(--blob-color);
     }
 
-    p {
-      font-size: 1.1rem;
-      max-width: 400px;
-    }
-  }
-
-  .enquiry-right {
-    .form-wrapper {
-      width: 100%;
-      max-width: 500px;
-      padding: 2rem;
-      background-color: var(--bg-color);
-      border-radius: $border-radius;
-
-      border-width: 3px;
-      border-style: solid;
-      border-color: var(--border-color);
-
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      box-sizing: border-box;
-      transition: background-color $transition-speed, border-color $transition-speed;
+    &.blob-2 {
+      bottom: -80px;
+      right: -60px;
+      color: var(--blob-color);
     }
   }
 }
 
-// ==============================
-// Form Styling
-// ==============================
-.enquiry-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1.25rem;
-  width: 100%;
+// =============================
+// === LEFT SECTION ===
+// =============================
+.enquiry-left {
+  flex: 1;
+  padding: 2rem;
+  z-index: 1;
 
-  .form-group {
+  h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    text-shadow: 0px 3px 6px rgba(0, 0, 0, 0.3);
+  }
+
+  p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    text-shadow: 0px 3px 5px rgba(0, 0, 0, 0.25);
+  }
+}
+
+// =============================
+// === RIGHT SECTION (FORM) ===
+// =============================
+.enquiry-right {
+  flex: 1;
+  padding: 2rem;
+  z-index: 1;
+
+  .form-wrapper {
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    padding: 2rem;
+    background-color: var(--form-bg);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    transition: background-color $transition-speed, border-color $transition-speed;
+  }
+
+  .enquiry-form {
     display: flex;
     flex-direction: column;
-    width: 100%;
-    box-sizing: border-box;
+    gap: 1.5rem;
 
-    label {
-      margin-bottom: 0.5rem;
-      font-weight: 600;
-    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
 
-    input,
-    textarea {
-      @include input-style;
-      background-color: transparent;
-      color: var(--text-color);
-    }
-
-    .input-icon {
-      position: relative;
-
-      input,
-      textarea {
-        padding-left: 2.5rem;
+      label {
+        font-weight: bold;
+        margin-bottom: 0.5rem;
       }
 
-      .icon {
-        position: absolute;
-        top: 50%;
-        left: 0.75rem;
-        transform: translateY(-50%);
-        font-size: 1.2rem;
-        color: $color-glow;
+      .input-icon {
+        display: flex;
+        align-items: center;
+        background-color: var(--input-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 0.5rem;
+        transition: background-color $transition-speed;
+
+        .icon {
+          margin-right: 0.5rem;
+          color: var(--text-color);
+        }
+
+        input,
+        textarea {
+          flex: 1;
+          background: transparent;
+          border: none;
+          outline: none;
+          font-size: 1rem;
+          color: var(--text-color);
+
+          &::placeholder {
+            color: rgba(128, 128, 128, 0.7);
+          }
+        }
+      }
+
+      .error-message {
+        font-size: 0.875rem;
+        color: red;
+        margin-top: 0.25rem;
+      }
+
+      // Validation classes
+      .valid {
+        border: 2px solid green;
+      }
+
+      .error {
+        border: 2px solid red;
       }
     }
 
-    .error-message {
-      margin-top: 0.25rem;
-      color: red;
-      font-size: 0.9rem;
-    }
-  }
+    .submit-btn {
+      padding: 0.75rem 1.5rem;
+      background-color: var(--text-color);
+      color: var(--page-bg);
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color $transition-speed;
 
-  .submit-btn {
-    @include button-style;
-    width: 100%;
+      &:hover {
+        background-color: $color-glow;
+        color: white;
+      }
+    }
   }
 }
 
-// ==============================
-// Modal Styling
-// ==============================
+// =============================
+// === MODAL STYLES ===
+// =============================
 .modal-backdrop {
   position: fixed;
   top: 0;
   left: 0;
-  height: 100%;
   width: 100%;
-  background-color: rgba(0, 0, 0, 0.25);
-  backdrop-filter: blur(3px);
-  z-index: 999;
-  @include flex-center;
-  animation: fadeIn 0.3s ease-in-out;
+  height: 100%;
+  backdrop-filter: blur(6px);
+  background-color: $blur-background;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99;
 
   .modal {
-    backdrop-filter: blur(27px);
-
+    background-color: var(--modal-bg);
     padding: 2rem;
-    border-radius: $border-radius;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
     text-align: center;
     max-width: 400px;
     width: 90%;
-
-    border-width: 2px;
-    border-style: solid;
-    border-color: var(--border-color);
-
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.95);
-
-    font-size: 25px;
-    color: var(--text-color);
-    animation: slideUp 0.3s ease-in-out;
-
-    background-color: var(--bg-color-modal);
+    transition: background-color $transition-speed;
 
     h2 {
-      margin-bottom: 0.5rem;
-    }
-
-    p {
       margin-bottom: 1rem;
     }
 
+    p {
+      margin-bottom: 1.5rem;
+    }
+
     .modal-btn {
-      @include button-style;
+      padding: 0.5rem 1.2rem;
+      background-color: var(--text-color);
+      color: var(--page-bg);
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+
+      &:hover {
+        background-color: $color-glow;
+        color: white;
+      }
     }
   }
 }
 
-// ==============================
-// Animations
-// ==============================
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+// =============================
+// === THEME CLASSES ===
+// =============================
+.light-mode {
+  --page-bg: $color-light-bg;
+  --text-color: $color-dark-text;
+  --form-bg: #fffaf1;
+  --modal-bg: #fff;
+  --border-color: $color-border;
+  --input-bg: #fff;
+  --blob-color: #f9d3b4;
 }
 
-@keyframes slideUp {
-  from {
-    transform: translateY(30px);
-    opacity: 0;
-  }
+.dark-mode {
+  --page-bg: $color-dark-bg;
+  --text-color: $color-light-text;
+  --form-bg: #2b2b2b;
+  --modal-bg: #2a2a2a;
+  --border-color: #666;
+  --input-bg: #1a1a1a;
+  --blob-color: #4a4a4a;
+}
+
+// =============================
+// === ENTRY ANIMATIONS ===
+// =============================
+.animated {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: riseUp 0.6s ease forwards;
+}
+
+.delay-1 {
+  animation-delay: 0.3s;
+}
+.delay-2 {
+  animation-delay: 0.6s;
+}
+
+@keyframes riseUp {
   to {
+    opacity: 1;
     transform: translateY(0);
-    opacity: 1;
   }
 }
 
-// ==============================
-// Media Queries (Breakpoints)
-// ==============================
+// =============================
+// === MEDIA QUERIES ===
+// =============================
 
-/* --------- Desktop (≥1200px) --------- */
-@media (min-width: 1200px) {
-  .enquiry-left h1 {
-    font-size: 2.5rem;
-  }
-}
-
-/* --------- Laptop (1024px - 1199px) --------- */
-@media (max-width: 1199px) and (min-width: 1024px) {
-  .enquiry-left h1 {
-    font-size: 2.2rem;
-  }
-
-  .form-wrapper {
-    padding: 1.75rem;
-  }
-}
-
-/* --------- Tablet (768px - 1023px) --------- */
-@media (max-width: 1023px) and (min-width: 768px) {
+// === MOBILE (< 600px) ===
+@media (max-width: 600px) {
   .enquiry-page {
     flex-direction: column;
+    padding: 1rem;
   }
 
-  .form-wrapper {
-    max-width: 90%;
-    margin: auto;
+  .enquiry-left,
+  .enquiry-right {
+    padding: 1rem;
   }
 }
 
-/* --------- Mobile (<768px) --------- */
-@media (max-width: 767px) {
+// === TABLET (600px – 992px) ===
+@media (min-width: 601px) and (max-width: 992px) {
   .enquiry-page {
     flex-direction: column;
+    padding: 2rem;
   }
 
-  .enquiry-left h1 {
-    font-size: 1.8rem;
+  .enquiry-left,
+  .enquiry-right {
+    padding: 1.5rem;
   }
+}
 
-  .form-wrapper {
-    max-width: 95%;
-    margin: 0 auto;
-    padding: 1.25rem;
+// === LAPTOP (992px – 1200px) ===
+@media (min-width: 993px) and (max-width: 1200px) {
+  .enquiry-page {
+    padding: 2.5rem 4rem;
   }
+}
 
-  .submit-btn {
-    font-size: 1rem;
-    padding: 0.75rem;
+// === DESKTOP (> 1200px) ===
+@media (min-width: 1201px) {
+  .enquiry-page {
+    padding: 4rem 6rem;
   }
 }
