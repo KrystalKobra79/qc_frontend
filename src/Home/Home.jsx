@@ -2,8 +2,8 @@
 import React, { useState, useEffect, Component } from 'react';
 import { Link } from 'react-router-dom';
 import { FaArrowRight } from 'react-icons/fa';
-import quantumClasses from '../assets/quantumClasses.svg';
-import quantumClasses from './quantumClasses.svg';
+//import quantumClasses from '../assets/quantumClasses.svg';
+//import quantumClasses from './quantumClasses.svg';
 import './Home.scss';
 
 //const quantumClassesLogo = require('./assets/quantumClasses.svg');
