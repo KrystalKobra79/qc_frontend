@@ -1,271 +1,404 @@
-/* ==========================================================================
-   GLOBAL VARIABLES
-========================================================================== */
-$color-light-bg: blanchedalmond;
-$color-dark-bg: #1e1e1e;
-
-$color-light-text: #f5f5f5;
-$color-dark-text: #1a1a1a;
-
+// ==================================================
+// ✅ GLOBAL VARIABLES
+// ==================================================
+$color-primary: #007bff;
 $color-glow: #66aaff;
 $color-border: #cccccc;
 
+$color-text-light: blanchedalmond;
+$color-text-dark: #1a1a1a;
+
+$color-bg-light: rgb(252, 199, 131);
+$color-bg-dark: #1e1e1e;
+
+$radius-md: 6px;
 $transition-speed: 0.3s;
-$blur-background: rgba(0, 0, 0, 0.2);
 
-$radius: 12px;
+// ==================================================
+// ✅ MIXINS
+// ==================================================
 
+// Primary Button Style
+@mixin button-primary {
+  padding: 0.5rem 1rem;
+  border: none;
+  background: $color-primary;
+  color: $color-text-light;
+  font-weight: bold;
+  border-radius: $radius-md;
+  cursor: pointer;
+  transition: background $transition-speed;
 
-/* ==========================================================================
-   THEME VARIABLE MAPPING
-========================================================================== */
-:root {
-  --bg: #{$color-light-bg};
-  --text: #{$color-dark-text};
-  --primary: #{$color-glow};
-  --border: #{$color-border};
-  --card: #ffffff;
-  --shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-.theme-dark {
-  --bg: #{$color-dark-bg};
-  --text: #{$color-light-text};
-  --primary: #{$color-glow};
-  --border: darken($color-border, 25%);
-  --card: #2b2b2b;
-  --shadow: 0 4px 8px rgba(255, 255, 255, 0.05);
-}
-.theme-light {
-  --bg: #{$color-light-bg};
-  --text: #{$color-dark-text};
-  --primary: #{$color-glow};
-  --border: #{$color-border};
-  --card: #ffffff;
-  --shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  &:hover {
+    background: darken($color-primary, 10%);
+  }
 }
 
+// Glow interaction for hover (desktop) or touch (mobile/tablet)
+@mixin glow-on-interaction {
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      outline: 2px solid $color-glow;
+      outline-offset: 2px;
+    }
+  }
 
-/* ==========================================================================
-   MIXINS
-========================================================================== */
-@mixin theme-bg {
-  background-color: var(--bg);
-}
-@mixin theme-text {
-  color: var(--text);
-}
-@mixin theme-border {
-  border-color: var(--border);
-}
-@mixin card {
-  border-radius: $radius;
-  padding: 1rem;
-  border: 1px solid;
-  @include theme-border;
-  background-color: var(--card);
-  box-shadow: var(--shadow);
-  transition: all $transition-speed ease;
+  @media (hover: none) and (pointer: coarse) {
+    &:active {
+      outline: 2px solid $color-glow;
+      outline-offset: 2px;
+    }
+  }
 }
 
+// Shadow
+@mixin shadow-soft {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
 
+// Glassmorphism
+@mixin glassmorphism {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 12px rgba(102, 170, 255, 0.4);
+}
 
-/* ==========================================================================
-   DASHBOARD STYLES
-========================================================================== */
-.courses-dashboard {
-  @include theme-bg;
-  @include theme-text;
-  min-height: 100vh;
+// Media Queries
+$bp-mobile: 480px;
+$bp-tablet: 768px;
+$bp-laptop: 1024px;
+$bp-desktop: 1280px;
+
+@mixin mobile {
+  @media (max-width: #{$bp-mobile}) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (min-width: #{$bp-mobile + 1}) and (max-width: #{$bp-tablet}) {
+    @content;
+  }
+}
+
+@mixin laptop {
+  @media (min-width: #{$bp-tablet + 1}) and (max-width: #{$bp-laptop}) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: #{$bp-laptop + 1}) {
+    @content;
+  }
+}
+
+// ==================================================
+// ✅ COURSES COMPONENT STYLES
+// ==================================================
+
+.fm-student-courses {
   padding: 2rem;
-  font-family: 'Inter', sans-serif;
-  transition: all $transition-speed ease;
+  background-color: $color-text-light;
+  color: $color-text-dark;
+  transition: background-color $transition-speed, color $transition-speed;
 
-  display: grid;
-  grid-template-columns: 220px 1fr;
-  gap: 2rem;
+  // ✅ DARK MODE OVERRIDE
+  &.dark-mode {
+    background-color: $color-bg-dark;
+    color: $color-text-light;
 
-  /* ================= Sidebar ================= */
-  &__sidebar {
-    @include card;
-    position: sticky;
-    top: 1rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1.2rem;
-
-    h2 {
-      font-size: 1.2rem;
-      color: var(--primary);
-      margin-bottom: 0.5rem;
+    .course-search,
+    .tabs button,
+    .course-card,
+    .btn {
+      background-color: $color-bg-dark;
+      color: $color-text-light;
+      border-color: lighten($color-bg-dark, 10%);
     }
 
-    nav {
-      display: flex;
-      flex-direction: column;
-      gap: 0.6rem;
+    .course-title,
+    .course-author,
+    .course-meta,
+    .progress-label {
+      color: $color-text-light;
+    }
 
-      a {
-        padding: 0.5rem 1rem;
-        border-radius: $radius;
-        text-decoration: none;
-        color: inherit;
-        transition: background $transition-speed;
-
-        &:hover {
-          background-color: rgba(0, 0, 0, 0.05);
-        }
-      }
+    .tabs button.active {
+      background-color: $color-primary;
+      color: $color-text-light;
     }
   }
 
-  /* ================= Header ================= */
-  &__header {
-    grid-column: span 2;
-    margin-bottom: 1rem;
-
-    h1 {
-      font-size: 2rem;
-      font-weight: 600;
-      border-left: 4px solid var(--primary);
-      padding-left: 1rem;
-    }
-  }
-
-  /* ================= Stats ================= */
-  &__stats {
+  // -----------------------------
+  // 🔹 Header (Title + Search)
+  // -----------------------------
+  .courses-header {
     display: flex;
-    gap: 1rem;
+    justify-content: space-between;
+    align-items: center;
     flex-wrap: wrap;
+    gap: 1rem;
 
-    &-card {
-      @include card;
-      flex: 1 1 200px;
-      text-align: center;
+    .page-title {
+      font-size: 2rem;
+      color: inherit;
+      flex: 1;
+    }
 
-      .value {
-        font-size: 1.8rem;
-        font-weight: 700;
-        margin-bottom: 0.5rem;
-        color: var(--primary);
+    // Search Box
+    .course-search {
+      flex: 1;
+      max-width: 290px;
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+      border: 3px solid $color-border;
+      border-radius: $radius-md;
+      background-color: $color-text-light;
+      color: $color-text-dark;
+
+      &::placeholder {
+        color: lighten($color-text-dark, 25%);
       }
 
-      .label {
-        font-size: 0.95rem;
-        opacity: 0.85;
-      }
+      @include glow-on-interaction;
     }
   }
 
-  /* ================= Course Cards ================= */
-  &__courses-list {
-    margin-top: 2rem;
+  // -----------------------------
+  // 🔹 Tabs
+  // -----------------------------
+  .tabs {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 1rem 0;
+
+    button {
+      padding: 0.5rem 1rem;
+      background: none;
+      border: 1px solid $color-border;
+      border-right: none;
+      font-weight: bold;
+      color: inherit;
+      cursor: pointer;
+      transition: background $transition-speed;
+
+      &:last-child {
+        border-right: 1px solid $color-border;
+      }
+
+      &.active {
+        background-color: $color-primary;
+        color: $color-text-light;
+        border-color: $color-primary;
+      }
+
+      &:hover {
+        background: lighten($color-primary, 35%);
+      }
+
+      @include glow-on-interaction;
+    }
+  }
+
+  // -----------------------------
+  // 🔹 Courses Grid
+  // -----------------------------
+  .courses-list {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 1.5rem;
   }
 
-  &__card {
-    @include card;
-    position: relative;
-    transition: transform $transition-speed;
+  // -----------------------------
+  // 🔹 Course Card
+  // -----------------------------
+  .course-card {
+    background: $color-bg-light;
+    border: 1px solid $color-border;
+    border-radius: $radius-md;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: all $transition-speed;
+    @include shadow-soft;
+    @include glow-on-interaction;
 
-    &:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 0 15px $color-glow;
+    .course-thumb {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
     }
 
-    &-title {
-      font-size: 1.2rem;
-      font-weight: 600;
-      margin-bottom: 0.3rem;
+    .course-info {
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+
+      .course-title {
+        font-size: 1.25rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .course-author {
+        font-size: 0.9rem;
+        margin-bottom: 0.5rem;
+        color: lighten($color-text-dark, 25%);
+      }
+
+      .course-meta {
+        font-size: 0.85rem;
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 1rem;
+      }
+
+      .course-progress {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1rem;
+
+        .progress-bar {
+          flex: 1;
+          height: 8px;
+          background: lighten($color-border, 15%);
+          border-radius: 4px;
+          margin-right: 0.5rem;
+
+          .progress-inner {
+            height: 100%;
+            background: $color-primary;
+            transition: width $transition-speed;
+          }
+        }
+
+        .progress-label {
+          font-size: 0.85rem;
+        }
+      }
+
+      .btn {
+        align-self: flex-start;
+        @include button-primary;
+        @include glow-on-interaction;
+      }
+    }
+  }
+
+  .no-courses {
+    grid-column: 1 / -1;
+    text-align: center;
+    font-style: italic;
+    margin-top: 2rem;
+    color: lighten($color-text-dark, 35%);
+  }
+
+  // -----------------------------
+  // 🔹 Glassmorphic Modal
+  // -----------------------------
+  .course-modal {
+    @include glassmorphism;
+    border-radius: 12px;
+    padding: 2rem;
+    max-width: 500px;
+    margin: auto;
+    position: relative;
+    z-index: 10;
+    animation: fadeIn 0.4s ease-in-out;
+
+    @include glow-on-interaction;
+
+    h2 {
+      color: $color-primary;
     }
 
     p {
-      font-size: 0.9rem;
-      opacity: 0.85;
-    }
-
-    .progress-bar {
-      margin-top: 1rem;
-      height: 8px;
-      background-color: var(--border);
-      border-radius: 8px;
-      overflow: hidden;
-
-      &__filled {
-        height: 100%;
-        background-color: var(--primary);
-        transition: width $transition-speed;
-      }
+      color: $color-text-dark;
     }
   }
 
-  /* ================= Popular Courses ================= */
-  &__popular {
-    grid-column: span 2;
-    margin-top: 3rem;
+  // -----------------------------
+  // 🔹 Media Queries
+  // -----------------------------
+  @include mobile {
+    padding: 1rem;
 
-    h3 {
-      font-size: 1.4rem;
-      margin-bottom: 1rem;
-      color: var(--primary);
-    }
-
-    .highlight-box {
-      @include card;
-      display: flex;
+    .courses-header {
       flex-direction: column;
-      gap: 0.5rem;
+      align-items: flex-start;
 
-      .highlight-title {
-        font-weight: 600;
-      }
-
-      .highlight-progress {
-        font-size: 0.85rem;
-        opacity: 0.75;
-      }
-    }
-  }
-
-  /* ==========================================================================
-     RESPONSIVE BREAKPOINTS
-  ========================================================================== */
-
-  // -------- Mobile --------
-  @media (max-width: 600px) {
-    grid-template-columns: 1fr;
-    gap: 1rem;
-
-    &__sidebar {
-      flex-direction: row;
-      overflow-x: auto;
-      nav {
-        flex-direction: row;
+      .course-search {
+        width: 100%;
       }
     }
 
-    &__header h1 {
-      font-size: 1.5rem;
-    }
-
-    &__stats {
+    .tabs {
       flex-direction: column;
+      button {
+        width: 100%;
+        margin-bottom: 0.5rem;
+      }
+    }
+
+    .courses-list {
+      grid-template-columns: 1fr;
     }
   }
 
-  // -------- Tablet --------
-  @media (min-width: 601px) and (max-width: 1024px) {
-    grid-template-columns: 180px 1fr;
+  @include tablet {
+    .courses-list {
+      grid-template-columns: repeat(2, 1fr);
+    }
   }
 
-  // -------- Laptop --------
-  @media (min-width: 1025px) and (max-width: 1440px) {
-    grid-template-columns: 200px 1fr;
+  @include laptop {
+    .courses-list {
+      grid-template-columns: repeat(3, 1fr);
+    }
   }
 
-  // -------- Desktop --------
-  @media (min-width: 1441px) {
-    grid-template-columns: 240px 1fr;
+  @include desktop {
+    .courses-list {
+      grid-template-columns: repeat(4, 1fr);
+    }
   }
 }
+
+// MODALS
+
+// =========================
+// 🔄 Modal Animations
+// =========================
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.3s ease-in-out;
+}
+

@@ -46,16 +46,17 @@ const NavBar = ({ isDarkMode, toggleTheme }) => {
     setIsMenuOpen(prev => !prev);
   };
 
+  // Prepare overlay element (outside of JSX return)
+  const overlay = isMenuOpen ? (
+    <div
+      className="navbar__overlay"
+      onClick={() => setIsMenuOpen(false)}
+    ></div>
+  ) : null;
+
   return (
     <>
-      {/* Overlay for blur and outside-click */}
-      {isMenuOpen && (
-        <div
-          className="navbar__overlay"
-          onClick={() => setIsMenuOpen(false)}
-        ></div>
-      )}
-
+      {overlay}
       <header className="navbar">
         <div className="navbar__container">
           {/* Logo */}
