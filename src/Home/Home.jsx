@@ -59,7 +59,8 @@ const Home = () => {
         <div className="hero-image">
           {/* Replace with actual hero image */}
           <div className="image-placeholder">
-            <img src={quantumClasses} alt="" className='logo-qc'/>
+            
+            
           </div>
         </div>
       </section>
@@ -95,3 +96,6 @@ const Home = () => {
 };
 
 export default Home;
+
+// put this inside <div className="image-placeholder"></div>
+//<img src={quantumClasses} alt="" className='logo-qc'/>
