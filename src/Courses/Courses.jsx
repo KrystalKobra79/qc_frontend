@@ -1,165 +1,106 @@
-import React, { useState, useEffect } from 'react';
-import './Courses.scss';
-
-const dummyCourses = [
-  {
-    id: 1,
-    title: 'React for Beginners',
-    author: 'John Doe',
-    lessons: 12,
-    lastAccessed: '2025-08-01',
-    progress: 75,
-    thumbnail: 'https://via.placeholder.com/300x160',
-  },
-  {
-    id: 2,
-    title: 'Advanced CSS Animations',
-    author: 'Jane Smith',
-    lessons: 9,
-    lastAccessed: '2025-07-25',
-    progress: 40,
-    thumbnail: 'https://via.placeholder.com/300x160',
-  },
-  {
-    id: 3,
-    title: 'Mastering JavaScript ES6+',
-    author: 'Chris Lee',
-    lessons: 15,
-    lastAccessed: '2025-06-30',
-    progress: 100,
-    thumbnail: 'https://via.placeholder.com/300x160',
-  },
-  {
-    id: 4,
-    title: 'Responsive Web Design',
-    author: 'Emily Carter',
-    lessons: 10,
-    lastAccessed: '2025-06-15',
-    progress: 100,
-    thumbnail: 'https://via.placeholder.com/300x160',
-  },
-  {
-    id: 5,
-    title: 'Git & GitHub Crash Course',
-    author: 'Michael Chan',
-    lessons: 7,
-    lastAccessed: '2025-07-01',
-    progress: 100,
-    thumbnail: 'https://via.placeholder.com/300x160',
-  },
-];
-
+import React, { useState } from "react";
+import courseData from "./courseData"; // keep your 60-course dataset here
+import "./Courses.scss";
 
 const Courses = () => {
-  const [activeTab, setActiveTab] = useState('inProgress');
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCourse, setSelectedCourse] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedClass, setSelectedClass] = useState("");
+  const [selectedBoard, setSelectedBoard] = useState("");
+  const [flipped, setFlipped] = useState(null); // id of flipped card
 
-  // Track theme based on <body> class
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const handleSearchChange = (e) => setSearchQuery(e.target.value);
+  const handleFlip = (id) => setFlipped((prev) => (prev === id ? null : id));
 
-  useEffect(() => {
-    const checkTheme = () => {
-      setIsDarkMode(document.body.classList.contains('dark-mode'));
-    };
-
-    checkTheme(); // Initial check
-    const observer = new MutationObserver(checkTheme);
-    observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
-
-    return () => observer.disconnect();
-  }, []);
-
-  const filteredCourses = dummyCourses.filter((course) => {
-    const matchesSearch = course.title.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesTab =
-      activeTab === 'inProgress' ? course.progress < 100 : course.progress === 100;
-    return matchesSearch && matchesTab;
+  const filteredCourses = courseData.filter((course) => {
+    const matchesSearch = course.title
+      .toLowerCase()
+      .includes(searchQuery.toLowerCase());
+    const matchesClass = selectedClass ? course.class === selectedClass : true;
+    const matchesBoard = selectedBoard ? course.board === selectedBoard : true;
+    return matchesSearch && matchesClass && matchesBoard;
   });
 
   return (
-    <div className={`fm-student-courses ${isDarkMode ? 'dark-mode' : ''}`}>
-      {/* Header Section */}
+    <div className="fm-student-courses">
+      {/* Header & Filters */}
       <div className="courses-header">
-        <h2 className="page-title">My Courses</h2>
+        <h2 className="page-title">Our Courses</h2>
+
         <input
           type="text"
           className="course-search"
           placeholder="Search courses..."
           value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
+          onChange={handleSearchChange}
+          aria-label="Search courses"
         />
+
+        <div className="filters">
+          <select
+            className="filter-select"
+            value={selectedClass}
+            onChange={(e) => setSelectedClass(e.target.value)}
+            aria-label="Filter by class"
+          >
+            <option value="">All Classes</option>
+            <option value="VII">Class VII</option>
+            <option value="VIII">Class VIII</option>
+            <option value="IX">Class IX</option>
+            <option value="X">Class X</option>
+            <option value="XI">Class XI</option>
+            <option value="XII">Class XII</option>
+          </select>
+
+          <select
+            className="filter-select"
+            value={selectedBoard}
+            onChange={(e) => setSelectedBoard(e.target.value)}
+            aria-label="Filter by board"
+          >
+            <option value="">All Boards</option>
+            <option value="CBSE">CBSE</option>
+            <option value="ICSE">ICSE</option>
+          </select>
+        </div>
       </div>
 
-      {/* Tabs */}
-      <div className="tabs">
-        <button
-          className={activeTab === 'inProgress' ? 'active' : ''}
-          onClick={() => setActiveTab('inProgress')}
-        >
-          In Progress
-        </button>
-        <button
-          className={activeTab === 'completed' ? 'active' : ''}
-          onClick={() => setActiveTab('completed')}
-        >
-          Completed
-        </button>
-      </div>
-
-      {/* Courses List */}
+      {/* Courses Grid */}
       <div className="courses-list">
         {filteredCourses.length === 0 ? (
           <div className="no-courses">No courses found.</div>
         ) : (
           filteredCourses.map((course) => (
             <div
-              className="course-card"
               key={course.id}
-              onClick={() => setSelectedCourse(course)}
+              className={`course-card ${flipped === course.id ? "flipped" : ""}`}
+              onClick={() => handleFlip(course.id)}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") handleFlip(course.id);
+              }}
             >
-              <img src={course.thumbnail} alt={course.title} className="course-thumb" />
-              <div className="course-info">
+              {/* Front Face */}
+              <div className="course-front">
                 <h3 className="course-title">{course.title}</h3>
-                <div className="course-author">By {course.author}</div>
-                <div className="course-meta">
-                  <span>{course.lessons} Lessons</span>
-                  <span>Last accessed: {course.lastAccessed}</span>
-                </div>
-                <div className="course-progress">
-                  <div className="progress-bar">
-                    <div
-                      className="progress-inner"
-                      style={{ width: `${course.progress}%` }}
-                    />
-                  </div>
-                  <div className="progress-label">{course.progress}%</div>
-                </div>
-                <button className="btn">Resume</button>
+                <p className="course-meta">Class {course.class} &middot; {course.board}</p>
+                <span className="flip-hint">Click to view syllabus</span>
+              </div>
+
+              {/* Back Face */}
+              <div className="course-back">
+                <h4 className="syllabus-title">Syllabus</h4>
+                <ul className="syllabus-list">
+                  {course.syllabus.map((topic, idx) => (
+                    <li key={idx}>{topic}</li>
+                  ))}
+                </ul>
+                <span className="flip-hint">Click to flip back</span>
               </div>
             </div>
           ))
         )}
       </div>
-
-      {/* Modal */}
-      {selectedCourse && (
-        <div className="modal-backdrop" onClick={() => setSelectedCourse(null)}>
-          <div
-            className="course-modal fade-in"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <h2>{selectedCourse.title}</h2>
-            <p><strong>Author:</strong> {selectedCourse.author}</p>
-            <p><strong>Lessons:</strong> {selectedCourse.lessons}</p>
-            <p><strong>Last Accessed:</strong> {selectedCourse.lastAccessed}</p>
-            <p><strong>Progress:</strong> {selectedCourse.progress}%</p>
-            <button className="btn" onClick={() => setSelectedCourse(null)}>
-              Close
-            </button>
-          </div>
-        </div>
-      )}
     </div>
   );
 };

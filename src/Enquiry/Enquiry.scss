@@ -1,74 +1,26 @@
-// ==============================
-// Theme Variables
-// ==============================
-$color-light-bg: blanchedalmond;
+// ===============================
+// Variables
+// ===============================
+$color-light-bg: #fdf5e6;
 $color-dark-bg: #1e1e1e;
-$color-light-text: #f5f5f5;
-$color-dark-text: #1a1a1a;
-$color-glow: #66aaff;
-$color-border: #cccccc;
+
+$color-light-text: #1a1a1a;
+$color-dark-text: #f5f5f5;
+
+$color-border-light: #d3c7b2;
+$color-border-dark: #444;
+
+$color-accent: #66aaff;
+$color-error: #e74c3c;
 $transition-speed: 0.3s;
-$blur-background: rgba(0, 0, 0, 0.2);
 
-$border-radius: 0.5rem;
-$font-stack: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-
-// ==============================
-// Mixins
-// ==============================
-@mixin flex-center {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-@mixin input-style {
-  width: 100%;
-  padding: 0.75rem;
-  border: 1px solid $color-border;
-  border-radius: $border-radius;
-  font-size: 1rem;
-  outline: none;
-  box-sizing: border-box;
-  transition: border $transition-speed, box-shadow $transition-speed;
-
-  &:focus {
-    border-color: $color-glow;
-    box-shadow: 0 0 5px $color-glow;
-  }
-
-  &.error {
-    border-color: red;
-  }
-
-  &.valid {
-    border-color: green;
-  }
-}
-
-@mixin button-style {
-  background-color: $color-glow;
-  color: $color-dark-text;
-  border: none;
-  padding: 0.75rem 1.5rem;
-  font-size: 1rem;
-  font-weight: bold;
-  border-radius: $border-radius;
-  cursor: pointer;
-  transition: background-color $transition-speed;
-
-  &:hover {
-    background-color: darken($color-glow, 10%);
-  }
-}
-
-// ==============================
+// ===============================
 // Animations
-// ==============================
-@keyframes fadeUp {
+// ===============================
+@keyframes bubbleRise {
   0% {
     opacity: 0;
-    transform: translateY(40px);
+    transform: translateY(30px);
   }
   100% {
     opacity: 1;
@@ -76,205 +28,265 @@ $font-stack: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   }
 }
 
-.animated {
-  opacity: 0;
-  animation: fadeUp 0.6s ease-out forwards;
-
-  &.delay-1 {
-    animation-delay: 0.2s;
-  }
-  &.delay-2 {
-    animation-delay: 0.4s;
-  }
-  &.delay-3 {
-    animation-delay: 0.6s;
-  }
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
-// ==============================
-// Layout
-// ==============================
+// ===============================
+// Page Wrapper
+// ===============================
 .enquiry-page {
   display: flex;
-  flex-direction: row;
+  flex-direction: column; // mobile-first
   min-height: 100vh;
-  font-family: $font-stack;
-  overflow-x: hidden;
-  background-color: var(--bg-color);
-  color: var(--text-color);
+  background-color: var(--page-bg);
+  color: var(--page-text);
   transition: background-color $transition-speed, color $transition-speed;
 
-  .enquiry-left,
-  .enquiry-right {
-    flex: 1;
-    padding: 2rem;
-    @include flex-center;
-    flex-direction: column;
-    box-sizing: border-box;
+  &.light-mode {
+    --page-bg: $color-light-bg;
+    --page-text: $color-light-text;
+    --form-bg: #fff;
+    --modal-bg: #fff;
+    --border-color: $color-border-light;
   }
 
-  .enquiry-left {
-    text-align: center;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2); // Floating effect
-
-    h1 {
-      font-size: 2.5rem;
-      margin-bottom: 1rem;
-    }
-
-    p {
-      font-size: 1.1rem;
-      max-width: 400px;
-    }
-  }
-
-  .enquiry-right {
-    .form-wrapper {
-      width: 100%;
-      max-width: 500px;
-      padding: 2rem;
-      background-color: var(--bg-color);
-      border: 2px solid $color-border;
-      border-radius: $border-radius;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-      box-sizing: border-box;
-      transition: background-color $transition-speed, border-color $transition-speed;
-    }
+  &.dark-mode {
+    --page-bg: $color-dark-bg;
+    --page-text: $color-dark-text;
+    --form-bg: #2a2a2a;
+    --modal-bg: #2e2e2e;
+    --border-color: $color-border-dark;
   }
 }
 
-// ==============================
-// Form Styling
-// ==============================
-.enquiry-form {
+// ===============================
+// Left Section (Info)
+// ===============================
+.enquiry-left {
+  padding: 2rem;
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
-  width: 100%;
+  justify-content: center;
 
-  .form-group {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    box-sizing: border-box;
-
-    label {
-      margin-bottom: 0.5rem;
-      font-weight: 600;
-    }
-
-    input,
-    textarea {
-      @include input-style;
-      background-color: transparent;
-      color: var(--text-color);
-    }
-
-    .input-icon {
-      position: relative;
-
-      input,
-      textarea {
-        padding-left: 2.5rem;
-      }
-
-      .icon {
-        position: absolute;
-        top: 50%;
-        left: 0.75rem;
-        transform: translateY(-50%);
-        font-size: 1.2rem;
-        color: $color-glow;
-      }
-    }
-
-    .error-message {
-      margin-top: 0.25rem;
-      color: red;
-      font-size: 0.9rem;
-    }
+  h1, p {
+    animation: bubbleRise 0.8s ease-out forwards;
   }
 
-  .submit-btn {
-    @include button-style;
-    width: 100%;
+  h1 {
+    font-size: 2rem;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.25);
+  }
+
+  p {
+    margin-top: 1.2rem;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
+    animation-delay: 0.3s;
   }
 }
 
-// ==============================
-// Modal Styling
-// ==============================
+// ===============================
+// Right Section (Form)
+// ===============================
+.enquiry-right {
+  padding: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: bubbleRise 1s ease-out forwards;
+  animation-delay: 0.6s;
+
+  .form-wrapper {
+    width: 100%;
+    max-width: 500px;
+    padding: 2rem;
+    background-color: var(--form-bg);
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+    transition: background-color $transition-speed, border-color $transition-speed;
+  }
+
+  .enquiry-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+
+      label {
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+      }
+
+      .input-icon {
+        position: relative;
+        display: flex;
+        align-items: center;
+
+        .icon {
+          position: absolute;
+          left: 12px;
+          font-size: 1rem;
+          color: var(--page-text);
+          opacity: 0.7;
+        }
+
+        input,
+        textarea {
+          width: 100%;
+          padding: 0.75rem 0.75rem 0.75rem 2.5rem;
+          border: 2px solid var(--border-color);
+          border-radius: 8px;
+          background: transparent;
+          color: var(--page-text);
+          transition: border-color $transition-speed, box-shadow $transition-speed;
+
+          &:focus {
+            outline: none;
+            border-color: $color-accent;
+            box-shadow: 0 0 6px $color-accent;
+          }
+
+          &.error {
+            border-color: $color-error;
+            box-shadow: 0 0 6px rgba(231, 76, 60, 0.6);
+          }
+
+          &.valid:not(.error) {
+            border-color: $color-accent;
+            box-shadow: 0 0 6px rgba(102, 170, 255, 0.6);
+          }
+        }
+
+        textarea { resize: none; }
+      }
+
+      .error-message {
+        margin-top: 0.3rem;
+        font-size: 0.85rem;
+        color: $color-error;
+      }
+    }
+
+    .submit-btn {
+      padding: 0.9rem;
+      background: $color-accent;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform $transition-speed, box-shadow $transition-speed;
+
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+      }
+    }
+  }
+}
+
+// ===============================
+// Modal
+// ===============================
 .modal-backdrop {
   position: fixed;
   top: 0;
   left: 0;
-  height: 100%;
   width: 100%;
-  backdrop-filter: blur(6px);
-  background-color: $blur-background;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 0.3s ease forwards;
   z-index: 999;
-  @include flex-center;
+}
 
-  .modal {
-    background: var(--bg-color);
-    padding: 2rem;
-    border-radius: $border-radius;
-    text-align: center;
-    max-width: 400px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    color: var(--text-color);
-    border: 2px solid $color-border;
+.modal {
+  background: var(--modal-bg);
+  padding: 2rem;
+  border-radius: 12px;
+  border: 2px solid var(--border-color);
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+  animation: bubbleRise 0.5s ease-out forwards;
+
+  h2 { margin-bottom: 1rem; }
+  p { margin-bottom: 1.5rem; }
+
+  .modal-btn {
+    padding: 0.7rem 1.2rem;
+    background: $color-accent;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color $transition-speed;
+
+    &:hover {
+      background: darken($color-accent, 10%);
+    }
   }
 }
 
-// ==============================
-// Media Queries (Breakpoints)
-// ==============================
+// ===============================
+// Responsive Layout
+// ===============================
 
-@media (min-width: 1200px) {
-  .enquiry-left h1 {
-    font-size: 2.5rem;
-  }
-}
-
-@media (max-width: 1199px) and (min-width: 1024px) {
-  .enquiry-left h1 {
-    font-size: 2.2rem;
-  }
-
-  .form-wrapper {
-    padding: 1.75rem;
-  }
-}
-
-@media (max-width: 1023px) and (min-width: 768px) {
+// Laptop & Desktop
+@media (min-width: 1024px) {
   .enquiry-page {
-    flex-direction: column;
+    flex-direction: row; // side by side
   }
 
-  .form-wrapper {
-    max-width: 90%;
-    margin: auto;
+  .enquiry-left,
+  .enquiry-right {
+    flex: 1 1 50%;
+    padding: 4rem;
   }
+
+  .enquiry-left h1 { font-size: 2.5rem; }
 }
 
+// Tablet (768px–1023px)
+@media (min-width: 768px) and (max-width: 1023px) {
+  .enquiry-page {
+    flex-direction: column; // stacked
+  }
+
+  .enquiry-left,
+  .enquiry-right {
+    flex: 1 1 100%;
+    padding: 3rem;
+  }
+
+  .enquiry-left h1 { font-size: 2.2rem; }
+  .enquiry-left p { font-size: 1rem; }
+}
+
+// Mobile (below 768px)
 @media (max-width: 767px) {
   .enquiry-page {
-    flex-direction: column;
+    flex-direction: column; // stacked
   }
 
-  .enquiry-left h1 {
-    font-size: 1.8rem;
+  .enquiry-left,
+  .enquiry-right {
+    flex: 1 1 100%;
+    padding: 2rem;
   }
 
-  .form-wrapper {
-    max-width: 95%;
-    margin: 0 auto;
-    padding: 1.25rem;
-  }
-
-  .submit-btn {
-    font-size: 1rem;
-    padding: 0.75rem;
-  }
+  .enquiry-left h1 { font-size: 1.8rem; }
+  .enquiry-left p { font-size: 0.95rem; }
 }

@@ -24,7 +24,7 @@ const About = ({ theme }) => {
       <section className="intro fade-in">
         <h1>About Us</h1>
         <p>
-          At Wellnesty, we believe wellness is more than physical health. Our mission is to create holistic well-being experiences that nurture your mind, body, and soul.
+          A premium insititute for CBSE and ICSE Students.
         </p>
       </section>
 
@@ -67,7 +67,7 @@ const About = ({ theme }) => {
       {/* CTA Section */}
       <section className="cta fade-in">
         <p>
-          Ready to start your wellness journey? <a href="/contact">Contact us today</a> and take the first step.
+          Ready to start your academic journey? <a href="/enquiry">Contact us today</a> and take the first step.
         </p>
       </section>
     </div>

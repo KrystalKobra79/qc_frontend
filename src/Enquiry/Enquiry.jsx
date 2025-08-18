@@ -1,114 +1,186 @@
-import React, { useState, useEffect } from 'react';
-import './Enquiry.scss';
-import { FaUser, FaEnvelope, FaPhone, FaComment } from 'react-icons/fa';
+import React, { useState } from "react";
+import axios from "axios";
+import {
+  FaUser,
+  FaPhone,
+  FaEnvelope,
+  FaCommentDots,
+} from "react-icons/fa";
+import "./Enquiry.scss";
 
-const placeHolderData = ['Your Name', 'email@example.org', '+91 9876543201', 'Hello, I would love to study here...']
 const Enquiry = () => {
+  // ------------------------
+  // State Management
+  // ------------------------
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    enquiry: '',
+    name: "",
+    phone: "",
+    email: "",
+    enquiry: "",
   });
 
-  const [formErrors, setFormErrors] = useState({});
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [theme, setTheme] = useState('light');
+  const [errors, setErrors] = useState({});
+  const [modal, setModal] = useState({ open: false, success: false });
 
-  useEffect(() => {
-    const htmlClass = document.documentElement.className;
-    setTheme(htmlClass.includes('dark-mode') ? 'dark' : 'light');
-  }, []);
+  // ------------------------
+  // Validation
+  // ------------------------
+  const validate = (field, value) => {
+    let error = "";
 
+    if (field === "name") {
+      if (!value.trim()) error = "Name is required";
+    }
+
+    if (field === "phone") {
+      const phoneRegex = /^[0-9]{10}$/;
+      if (!value.trim()) error = "Phone is required";
+      else if (!phoneRegex.test(value))
+        error = "Enter a valid 10-digit phone number";
+    }
+
+    if (field === "email") {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!value.trim()) error = "Email is required";
+      else if (!emailRegex.test(value)) error = "Enter a valid email";
+    }
+
+    if (field === "enquiry") {
+      if (!value.trim()) error = "Enquiry cannot be empty";
+    }
+
+    return error;
+  };
+
+  // ------------------------
+  // Handlers
+  // ------------------------
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    setFormData((prev) => ({ ...prev, [name]: value }));
-
-    // Real-time validation
-    setFormErrors((prev) => ({
-      ...prev,
-      [name]: !value.trim() ? 'This field is required' : '',
-    }));
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    const errors = {};
-    Object.entries(formData).forEach(([key, value]) => {
-      if (!value.trim()) {
-        errors[key] = 'This field is required';
-      }
+    setFormData({
+      ...formData,
+      [name]: value,
     });
 
-    if (Object.keys(errors).length > 0) {
-      setFormErrors(errors);
-      return;
+    // Real-time validation
+    setErrors({
+      ...errors,
+      [name]: validate(name, value),
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    // Final validation before submit
+    const newErrors = {};
+    Object.keys(formData).forEach((field) => {
+      const error = validate(field, formData[field]);
+      if (error) newErrors[field] = error;
+    });
+
+    setErrors(newErrors);
+
+    if (Object.keys(newErrors).length > 0) return;
+
+    try {
+      await axios.post("http://localhost:5000/api/enquiry", formData);
+      setModal({ open: true, success: true });
+      setFormData({ name: "", phone: "", email: "", enquiry: "" });
+    } catch (err) {
+      console.error("Error submitting form:", err);
+      setModal({ open: true, success: false });
     }
-
-    setIsSubmitted(true);
-    setFormData({ name: '', email: '', phone: '', enquiry: '' });
-
-    setTimeout(() => {
-      setIsSubmitted(false);
-    }, 4000);
   };
 
   return (
-    <div className={`enquiry-page ${theme}-mode`}>
+    <div className="enquiry-page">
+      {/* Left Section */}
       <div className="enquiry-left">
-        <h1 className="animated fade-up delay-1">Got a question?</h1>
-        <p className="animated fade-up delay-2">
-          Fill out this form and we’ll get back to you within 24 hours. We’re here to help with anything you need.
+        <h1>Contact Us</h1>
+        <p>
+          Got a question, feedback, or need help? Fill out the form and we’ll
+          get back to you as soon as possible.
         </p>
       </div>
 
+      {/* Right Section */}
       <div className="enquiry-right">
-        <div className="form-wrapper animated fade-up delay-3">
-          <form className="enquiry-form" onSubmit={handleSubmit} noValidate>
-            {['name', 'email', 'phone', 'enquiry'].map((field, index) => {
-              const Icon = {
-                name: FaUser,
-                email: FaEnvelope,
-                phone: FaPhone,
-                enquiry: FaComment,
-              }[field];
+        <div className="form-wrapper">
+          <form className="enquiry-form" onSubmit={handleSubmit}>
+            {/* Name */}
+            <div className={`form-group ${errors.name ? "error" : "valid"}`}>
+              <label htmlFor="name">Name</label>
+              <div className="input-icon">
+                <FaUser className="icon" />
+                <input
+                  type="text"
+                  name="name"
+                  id="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  className={errors.name ? "error" : "valid"}
+                />
+              </div>
+              {errors.name && <p className="error-message">{errors.name}</p>}
+            </div>
 
-              const isTextarea = field === 'enquiry';
-              const value = formData[field];
-              const error = formErrors[field];
+            {/* Phone */}
+            <div className={`form-group ${errors.phone ? "error" : "valid"}`}>
+              <label htmlFor="phone">Phone</label>
+              <div className="input-icon">
+                <FaPhone className="icon" />
+                <input
+                  type="text"
+                  name="phone"
+                  id="phone"
+                  value={formData.phone}
+                  onChange={handleChange}
+                  className={errors.phone ? "error" : "valid"}
+                />
+              </div>
+              {errors.phone && <p className="error-message">{errors.phone}</p>}
+            </div>
 
-              return (
-                <div className="form-group" key={field}>
-                  <label htmlFor={field}>{field.charAt(0).toUpperCase() + field.slice(1)}</label>
-                  <div className="input-icon">
-                    <Icon className="icon" />
-                    {isTextarea ? (
-                      <textarea
-                        name={`${field} *`}
-                        id={field}
-                        value={value}
-                        onChange={handleChange}
-                        className={error ? 'error' : value ? 'valid' : ''}
-                        
-                      />
-                    ) : (
-                      <input
-                        type={field === 'email' ? 'email' : 'text'}
-                        name={field}
-                        id={field}
-                        value={value}
-                        onChange={handleChange}
-                        className={error ? 'error' : value ? 'valid' : ''}
-                        placeholder= {placeHolderData[index]}
-                      />
-                    )}
-                  </div>
-                  {error && <span className="error-message">{error}</span>}
-                </div>
-              );
-            })}
+            {/* Email */}
+            <div className={`form-group ${errors.email ? "error" : "valid"}`}>
+              <label htmlFor="email">Email</label>
+              <div className="input-icon">
+                <FaEnvelope className="icon" />
+                <input
+                  type="email"
+                  name="email"
+                  id="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  className={errors.email ? "error" : "valid"}
+                />
+              </div>
+              {errors.email && <p className="error-message">{errors.email}</p>}
+            </div>
+
+            {/* Enquiry */}
+            <div
+              className={`form-group ${errors.enquiry ? "error" : "valid"}`}
+            >
+              <label htmlFor="enquiry">Enquiry</label>
+              <div className="input-icon">
+                <FaCommentDots className="icon" />
+                <textarea
+                  name="enquiry"
+                  id="enquiry"
+                  rows="4"
+                  value={formData.enquiry}
+                  onChange={handleChange}
+                  className={errors.enquiry ? "error" : "valid"}
+                />
+              </div>
+              {errors.enquiry && (
+                <p className="error-message">{errors.enquiry}</p>
+              )}
+            </div>
+
             <button type="submit" className="submit-btn">
               Submit
             </button>
@@ -116,12 +188,25 @@ const Enquiry = () => {
         </div>
       </div>
 
-      {isSubmitted && (
+      {/* Modal */}
+      {modal.open && (
         <div className="modal-backdrop">
           <div className="modal">
-            <h2>Thank You!</h2>
-            <p>Your enquiry has been received. We’ll be in touch soon.</p>
-            <button className="modal-btn" onClick={() => setIsSubmitted(false)}>
+            {modal.success ? (
+              <>
+                <h2>Thank You!</h2>
+                <p>Your enquiry has been submitted successfully.</p>
+              </>
+            ) : (
+              <>
+                <h2>Submission Failed</h2>
+                <p>Something went wrong. Please try again later.</p>
+              </>
+            )}
+            <button
+              className="modal-btn"
+              onClick={() => setModal({ open: false, success: false })}
+            >
               Close
             </button>
           </div>
