@@ -1,5 +1,6 @@
 import React from 'react';
 import './About.scss';
+import { FaBookOpen } from 'react-icons/fa';
 
 
 const About = ({ theme }) => {
@@ -23,6 +24,7 @@ const About = ({ theme }) => {
       {/* Intro Section */}
       <section className="intro fade-in">
         <h1>About Us</h1>
+        <h2>Quantum Classes&trade;</h2>
         <p>
           A premium insititute for CBSE and ICSE Students.
         </p>
@@ -31,40 +33,51 @@ const About = ({ theme }) => {
       {/* Values Section */}
       <section className="values fade-in">
         <div className="value-box">
-          <h3>Holistic Approach</h3>
-          <p>We promote complete wellness, not just fitness — nurturing mental, emotional, and physical health.</p>
-        </div>
-        <div className="value-box">
           <h3>Expert Guidance</h3>
-          <p>Our team of certified professionals ensures you're supported at every step of your wellness journey.</p>
+          <p>We provide extensive curriculum coverage and encourage students to interact and ask questions.</p>
         </div>
+
         <div className="value-box">
-          <h3>Community Support</h3>
-          <p>You're not alone — join a vibrant community that shares and grows together.</p>
+          <h3>Long-standing Experience</h3>
+          <p>Over 20 years of experience being a professor.</p>
         </div>
+
+        <div className="value-box">
+          <h3>Why choose us?</h3>
+          <p>B.Sc (Hons.) in Mathematics</p>
+          <p>Former Professor at St. Xavier's Institute</p>
+        </div>
+        
       </section>
 
-      {/* Team Section */}
-      <section className="team fade-in">
+        {/* 
+        <section className="team fade-in">
         <div className="team-card">
           
-          {/* <img src={member1} alt="Jane Doe" /> */}
+          <img src={member1} alt="Jane Doe" /> 
           <h4>Jane Doe</h4>
           <span>Nutritionist</span>
         </div>
         <div className="team-card">
-          {/* <img src={member1} alt="Jane Doe" /> */}
+          <img src={member1} alt="Jane Doe" />
           <h4>John Smith</h4>
           <span>Yoga Coach</span>
         </div>
         <div className="team-card">
-          {/* <img src={member1} alt="Jane Doe" /> */}
+          <img src={member1} alt="Jane Doe" />
           <h4>Sara Lee</h4>
           <span>Therapist</span>
         </div>
-      </section>
-
+      </section> */}
+      {/* Team Section */}
+      
       {/* CTA Section */}
+
+      <section className="cta fade-in course-link-card">
+        <p>
+        <a href="/courses"> <FaBookOpen/>   Check out our Courses</a>
+        </p>
+      </section>
       <section className="cta fade-in">
         <p>
           Ready to start your academic journey? <a href="/enquiry">Contact us today</a> and take the first step.

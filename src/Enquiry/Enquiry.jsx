@@ -118,6 +118,7 @@ const Enquiry = () => {
                   type="text"
                   name="name"
                   id="name"
+                  placeholder="Your Name *"
                   value={formData.name}
                   onChange={handleChange}
                   className={errors.name ? "error" : "valid"}
@@ -135,6 +136,7 @@ const Enquiry = () => {
                   type="text"
                   name="phone"
                   id="phone"
+                  placeholder="Your Phone *"
                   value={formData.phone}
                   onChange={handleChange}
                   className={errors.phone ? "error" : "valid"}
@@ -152,6 +154,7 @@ const Enquiry = () => {
                   type="email"
                   name="email"
                   id="email"
+                  placeholder="Your E-mail *"
                   value={formData.email}
                   onChange={handleChange}
                   className={errors.email ? "error" : "valid"}
@@ -171,6 +174,7 @@ const Enquiry = () => {
                   name="enquiry"
                   id="enquiry"
                   rows="4"
+                  placeholder="Your Enquiry *"
                   value={formData.enquiry}
                   onChange={handleChange}
                   className={errors.enquiry ? "error" : "valid"}

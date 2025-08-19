@@ -37,6 +37,8 @@ $transition-speed: 0.3s;
 // Page Wrapper
 // ===============================
 .enquiry-page {
+  margin-top: 2rem; // this is necessary after the "fixed navbar" update
+
   display: flex;
   flex-direction: column; // mobile-first
   min-height: 100vh;

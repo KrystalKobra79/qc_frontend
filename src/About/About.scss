@@ -18,6 +18,9 @@ $color-white: #fff;
 // === ABOUT PAGE STYLES ===
 .about-page {
   position: relative;
+
+  margin-top: 2rem; // this is necessary after the "fixed navbar" update
+
   padding: 3rem 1.5rem;
   overflow: hidden;
   transition: background 0.3s ease, color 0.3s ease;
@@ -209,6 +212,7 @@ $color-white: #fff;
       margin: 0;
 
       a {
+
         font-weight: bold;
         text-decoration: underline;
         transition: color 0.3s ease;
@@ -216,6 +220,28 @@ $color-white: #fff;
     }
   }
 
+  .course-link-card{
+    height: 2rem;
+    
+    padding: 2rem;
+    border-radius: 10px;
+    border: 2px solid gold;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+    transition: background 0.3s ease, color 0.3s ease;
+
+    p {
+      font-size: 1.2rem;
+      margin: 0;
+
+      a {
+        font-weight: bold;
+        text-decoration: underline;
+        transition: color 0.3s ease;
+      }
+    }
+  }
   // === ANIMATIONS ===
   .fade-in {
     opacity: 0;
@@ -259,5 +285,29 @@ $color-white: #fff;
         font-size: 1rem;
       }
     }
+
+
+  .course-link-card{
+    height: 2rem;
+
+    border-radius: 20px;
+    border: 2px solid gold;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+    transition: background 0.3s ease, color 0.3s ease;
+
+    p {
+      font-size: 1.2rem;
+      margin: 0;
+
+      a {
+
+        font-weight: bold;
+        text-decoration: underline;
+        transition: color 0.3s ease;
+      }
+    }
+  }
   }
 }

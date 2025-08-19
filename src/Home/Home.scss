@@ -1,4 +1,4 @@
-// === Color Variables ===
+// === COLOR VARIABLES ===
 $color-light-bg: blanchedalmond;
 $color-dark-bg: #1e1e1e;
 $color-light-text: #f5f5f5;
@@ -8,157 +8,155 @@ $color-border: #cccccc;
 $transition-speed: 0.3s;
 $blur-background: rgba(0, 0, 0, 0.2);
 
-// === Gradients for Cards ===
-$gradient-uiux: linear-gradient(135deg, #ff5f7e, #ff9770);
-$gradient-webdev: linear-gradient(135deg, #ffb347, #ffcc33);
-$gradient-dmark: linear-gradient(135deg, #3fc1ff, #a6e0ff);
-$gradient-practical: linear-gradient(135deg, #be9eff, #dfb5ff);
-
-// === Base Container ===
-.home-container {
-  transition: background-color $transition-speed, color $transition-speed;
-  padding: 1rem;
-  font-family: 'Segoe UI', sans-serif;
-
-  // Light Mode
-  &.light-mode {
-    background-color: $color-light-bg;
-    color: $color-dark-text;
-  }
-
-  // Dark Mode
-  &.dark-mode {
-    background-color: $color-dark-bg;
-    color: $color-light-text;
-  }
-}
-
-// === Hero Section ===
-.hero {
+// === HERO SECTION ===
+.hero-section {
+  font-size: 1.25rem;
   display: flex;
-  flex-direction: column-reverse;
+  flex-direction: column;
   align-items: center;
-  margin: 2rem 0;
-  transition: color $transition-speed;
-
-  .hero-text {
-    text-align: center;
-
-    .highlight {
-      color: $color-glow; // glowing highlight color
-    }
-
-    .cta {
-      background: $color-glow;
-      color: $color-light-text;
-      padding: 0.75rem 1.5rem;
-      border-radius: 24px;
-      text-decoration: none;
-      display: inline-block;
-      margin: 1rem 0;
-      transition: background-color $transition-speed, color $transition-speed;
-    }
-
-    .stats {
-      display: flex;
-      justify-content: center;
-      gap: 2rem;
-
-      .stat {
-        text-align: center;
-
-        span:first-child {
-          display: block;
-          font-size: 1.5rem;
-          font-weight: bold;
-        }
-      }
-    }
-  }
+  justify-content: space-between;
+  gap: 2rem;
+  padding: 4rem 2rem;
+  text-align: center;
 
   .hero-image {
-    margin-bottom: 2rem;
-
-    .image-placeholder {
-      width: 300px;
-      height: 300px;
-      background: $color-border;
+    .hero-img {
+      width: 280px;
+      height: 280px;
       border-radius: 50%;
-      transition: background-color $transition-speed;
+      border: 4px solid $color-border;
+      box-shadow: 0 0 20px $color-glow;
+      transition: transform $transition-speed ease-in-out;
 
-      .logo-qc{
-        z-index: 1001;
-        width: 300px;
-        height: 300px;
-        display: block;
+      &:hover {
+        transform: scale(1.05);
       }
+    }
+  }
+
+  .hero-info {
+    max-width: 500px;
+  }
+}
+
+// === TEACHER SECTION ===
+.teacher-section {
+  font-size: 1.25rem;
+
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4rem 2rem;
+
+  .teacher-info {
+    max-width: 500px;
+    text-align: center;
+  }
+
+  .teacher-image {
+    .teacher-img {
+      width: 250px;
+      height: 250px;
+      border-radius: 50%;
+      border: 3px solid $color-border;
+      object-fit: cover;
     }
   }
 }
 
-// === Courses Section ===
-.courses {
+// === COURSES SECTION ===
+.courses-section {
+  .courses-arrow-link{
+    font-size: 4rem;
+
+    &:hover{
+      color: gold;
+    }
+  }
+  padding: 4rem 2rem;
   text-align: center;
+
+  .section-title {
+    margin-bottom: 2rem;
+  }
+
+  .courses-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+
+    .course-card {
+      padding: 2rem;
+      border-radius: 1rem;
+      color: white;
+      font-size: 1.2rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform $transition-speed ease-in-out, box-shadow $transition-speed;
+
+      // Hover for desktop
+      &:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+      }
+
+      // Click animation for mobile/tablet
+      &:active {
+        transform: scale(1.05);
+      }
+
+      &.math { background: #4a90e2; }
+      &.physics { background: #50e3c2; }
+      &.chemistry { background: #f5a623; }
+      &.biology { background: #7ed321; }
+      &.cs { background: #9013fe; }
+    }
+  }
+}
+
+// === CTA SECTION ===
+.cta-section {
+  padding: 4rem 2rem;
+  text-align: center;
+  background: $color-glow;
+  color: white;
+  border-radius: 1.5rem;
+  margin: 2rem;
 
   h2 {
     margin-bottom: 1rem;
   }
+}
 
-  .course-grid {
-    display: grid;
-    gap: 1rem;
+// === RESPONSIVE BREAKPOINTS ===
+@media (min-width: 768px) {
+  .hero-section {
+    flex-direction: row;
+    text-align: left;
+  }
 
-    .course-card {
-      padding: 2rem;
-      border-radius: 16px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      color: $color-light-text;
-      span {
-        margin-top: 1rem;
-        font-weight: bold;
-      }
+  .teacher-section {
+    flex-direction: row;
+    text-align: left;
 
-      &.uiux { background: $gradient-uiux; }
-      &.webdev { background: $gradient-webdev; }
-      &.dmark { background: $gradient-dmark; }
-      &.practical { background: $gradient-practical; }
+    .teacher-info {
+      text-align: left;
     }
   }
 
-  .browse-all {
-    margin-top: 1rem;
-    color: $color-glow;
-    font-size: 1.5rem;
-    display: inline-block;
+  .courses-section {
+    .courses-container {
+      grid-template-columns: repeat(3, 1fr);
+    }
   }
 }
 
-// === Media Queries ===
-
-// Mobile ≤639px
-@media (max-width: 639px) {
-  .course-grid { grid-template-columns: 1fr; }
-}
-
-// Tablet 640–1023px
-@media (min-width: 640px) and (max-width: 1023px) {
-  .course-grid { grid-template-columns: repeat(2, 1fr); }
-}
-
-// Laptop 1024–1439px
-@media (min-width: 1024px) and (max-width: 1439px) {
-  .hero {
-    flex-direction: row;
-    .hero-text { text-align: left; }
-    .hero-image { margin-left: 2rem; }
+@media (min-width: 1024px) {
+  .courses-section {
+    .courses-container {
+      grid-template-columns: repeat(5, 1fr);
+    }
   }
-  .course-grid { grid-template-columns: repeat(3, 1fr); }
-}
-
-// Desktop ≥1440px
-@media (min-width: 1440px) {
-  .hero { padding: 0 4rem; }
-  .course-grid { grid-template-columns: repeat(4, 1fr); }
 }

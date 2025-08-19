@@ -49,6 +49,9 @@ $bp-laptop: 1024px;
 // Page shell
 // ===============================
 .fm-student-courses {
+
+  margin-top: 2rem; // this is necessary after the "fixed navbar" update
+
   min-height: 100vh;
   padding: 2rem;
 

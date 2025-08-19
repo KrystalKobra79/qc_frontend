@@ -71,6 +71,8 @@ body {
   z-index: 1000;
   border-bottom: 1px solid $color-border;
 
+  border-radius: 2rem;
+
   &__container {
     display: flex;
     justify-content: space-between;

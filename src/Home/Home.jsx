@@ -1,101 +1,79 @@
-// Home.jsx
-import React, { useState, useEffect, Component } from 'react';
-import { Link } from 'react-router-dom';
-import { FaArrowRight } from 'react-icons/fa';
-//import quantumClasses from '../assets/quantumClasses.svg';
-//import quantumClasses from './quantumClasses.svg';
-import './Home.scss';
+//Home.jsx
 
-//const quantumClassesLogo = require('./assets/quantumClasses.svg');
+import QuantumClasses from "../assets/QuantumClasses.webp";
+
+import React from "react";
+import { Link } from "react-router-dom";
+import { FaArrowAltCircleRight, FaChalkboardTeacher } from "react-icons/fa";
+import { MdOutlineLocationOn } from "react-icons/md";
+import { BiBookOpen } from "react-icons/bi";
+import "./Home.scss";
+
 const Home = () => {
-  const [theme, setTheme] = useState('light-mode'); // default
-
-  // === Sync theme with global body class ===
-  useEffect(() => {
-    const updateTheme = () => {
-      const bodyClass = document.body.classList.contains('dark-mode')
-        ? 'dark-mode'
-        : 'light-mode';
-      setTheme(bodyClass);
-    };
-
-    // Initial check
-    updateTheme();
-
-    // Listen for changes (in case other components change theme)
-    const observer = new MutationObserver(updateTheme);
-    observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
-
-    return () => observer.disconnect();
-  }, []);
-
   return (
-    <div className={`home-container ${theme}`}>
-      {/* ===== Hero Section ===== */}
-      <section className="hero">
-        <div className="hero-text">
-          <h1>
-            Investing in<br />
-            <span className="highlight">Knowledge and<br />Your Future</span>
-          </h1>
-          <p>
-            Our e-learning programs have been developed to deliver multimedia learning
-            solutions for your business and personal growth.
-          </p>
-          <Link to="/enquiry" className="cta">Contact</Link>
-
-          <div className="stats">
-            <div className="stat">
-              <span>50+</span>
-              <span>Career Courses</span>
-            </div>
-            <div className="stat">
-              <span>1M+</span>
-              <span>Our Students</span>
-            </div>
-          </div>
-        </div>
-
+    <div className="home-page">
+      {/* === HERO SECTION === */}
+      <section className="hero-section">
         <div className="hero-image">
-          {/* Replace with actual hero image */}
-          <div className="image-placeholder">
-            
-            
+          <img
+            src={QuantumClasses}
+            alt="Learning Illustration"
+            className="hero-img"
+          />
+        </div>
+        <div className="hero-info">
+          <h1 className="hero-title slide-up">Join Quantum Classes&trade; now!</h1>
+          <p className="hero-subtitle slide-up">
+          Quantum Classes&trade; : A premium institute for CBSE & ICSE students from classes VII-XII.
+          </p>
+          <div className="hero-buttons slide-up">
+            <Link to="/courses" className="btn primary">Explore Courses</Link>
+            <br/>
+            <Link to="/about" className="btn secondary">About Us</Link>
           </div>
         </div>
       </section>
 
-      {/* ===== Courses Section ===== */}
-      <section className="courses">
-        <h2>Browse Top Essential Career Courses</h2>
-        <div className="course-grid">
-          <div className="course-card uiux">
-            <div className="card-icon"></div>
-            <span>UI/UX Design</span>
-          </div>
-          <div className="course-card webdev">
-            <div className="card-icon"></div>
-            <span>Web Development</span>
-          </div>
-          <div className="course-card dmark">
-            <div className="card-icon"></div>
-            <span>Digital Marketing</span>
-          </div>
-          <div className="course-card practical">
-            <div className="card-icon"></div>
-            <span>Practical Learning</span>
-          </div>
+      {/* === TEACHER SECTION === */}
+      <section className="teacher-section">
+        <div className="teacher-info slide-up">
+          <h2><FaChalkboardTeacher /> Main Teacher</h2>
+          <p>
+            <strong>Prof. Alok Dey</strong><br />
+            B.Sc (Honors) in Mathematics, 20+ years of teaching experience.<br />
+            <MdOutlineLocationOn /> Quantum Classes, <br/> 1 No. Bijay Nagar, Madhyamgram, <br/>Kolkata - 7000129, India
+          </p>
         </div>
+        <div className="teacher-image slide-up">
+          <img
+            src={QuantumClasses}
+            alt="Main Teacher"
+            className="teacher-img"
+          />
+        </div>
+      </section>
 
-        <Link to="/courses" className="browse-all">
-          <FaArrowRight />
-        </Link>
+      {/* === COURSES SECTION === */}
+      <section className="courses-section">
+        <h2 className="section-title slide-up"><BiBookOpen /> Popular Courses</h2>
+        <div className="courses-container">
+          <div className="course-card math slide-up">Mathematics</div>
+          <div className="course-card physics slide-up">Physics</div>
+          <div className="course-card chemistry slide-up">Chemistry</div>
+          <div className="course-card biology slide-up">Biology</div>
+          <div className="course-card cs slide-up">Computer Science</div>
+        </div>
+        <Link to={"/courses"} className="courses-arrow-link"> <FaArrowAltCircleRight/> </Link>
+      </section>
+
+      {/* === CTA SECTION === */}
+      <section className="cta-section slide-up">
+        <h2>Start Your Learning Journey Today!</h2>
+        <p>Contact us now and join thousands of students achieving their dreams.</p>
+        <Link to="/enquiry" className="btn primary">Contact</Link>
       </section>
     </div>
   );
 };
 
 export default Home;
-
-// put this inside <div className="image-placeholder"></div>
-//<img src={quantumClasses} alt="" className='logo-qc'/>
