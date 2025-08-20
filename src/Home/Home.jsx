@@ -6,7 +6,7 @@ import teacher2 from "../assets/teacher2.jpg";
 
 import React from "react";
 import { Link } from "react-router-dom";
-import { FaArrowAltCircleRight, FaChalkboardTeacher } from "react-icons/fa";
+import { FaArrowAltCircleRight, FaChalkboardTeacher, FaRegDotCircle } from "react-icons/fa";
 import { MdOutlineLocationOn } from "react-icons/md";
 import { BiBookOpen } from "react-icons/bi";
 import "./Home.scss";
@@ -53,10 +53,11 @@ const Home = () => {
       <section className="teacher-section">
         {/* Alok Dey */}
            <div className="teacher-info slide-up">
-          <h2><FaChalkboardTeacher /> Main Teacher</h2>
+          <h2><FaChalkboardTeacher /> Founder</h2>
           <p>
-            <strong>Alok Dey</strong><br />
-            B.Sc (Honors) in Mathematics, 20+ years of teaching experience.<br />
+            <strong> <h3> Alok Dey </h3> </strong><br />
+             <FaRegDotCircle/> B.Sc (Honors) in Mathematics, 20+ years of teaching experience.<br />
+             <FaRegDotCircle/> Former teacher at St. Xavier's Institute.
           </p>
         </div>
         <div className="teacher-image slide-up">
@@ -69,10 +70,11 @@ const Home = () => {
        
         {/* Founder */}
         <div className="teacher-info slide-up">
-          <h2><FaChalkboardTeacher /> Founder</h2>
+          <h2><FaChalkboardTeacher /> Associate Teacher</h2>
           <p>
-            <strong>Alok Dey - [Partner]</strong><br />
-            B.Sc (Honors) in Mathematics, 20+ years of teaching experience.<br />
+            <strong> <h3> John Smith </h3> </strong><br />
+             <FaRegDotCircle/> B.Sc (Honors) in Physics, 20+ years of teaching experience.<br />
+             <FaRegDotCircle/> Former teacher at St. James' Institute.
             
           </p>
         </div>

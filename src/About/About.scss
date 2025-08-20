@@ -1,150 +1,84 @@
-@import '../GlobalVariables.scss';
+@import "../GlobalVariables.scss";
 
-// === ABOUT PAGE STYLES ===
+// ====================
+// ABOUT PAGE
+// ====================
 .about-page {
   position: relative;
-
-  margin-top: 2rem; // this is necessary after the "fixed navbar" update
-
+  margin-top: 2rem;
   padding: 3rem 1.5rem;
   overflow: hidden;
-  transition: background 0.3s ease, color 0.3s ease;
+  transition: background $transition-speed ease, color $transition-speed ease;
 
   &.light-mode {
-    background-color: $color-light-bg;
-    color: $color-light-text;
-
-    border-width: 1px;
-    border-style: solid;
-    border-color: $color-peach;
-
-    .value-box,
-    .team-card {
-      background-color: $color-light-box-bg;
-      color: $font-color-light-box-bg;
-
-      border-width: 2px;
-      border-style: solid;
-      border-color: $color-peach;
-    }
-
-    .cta {
-      background-color: $color-peach;
-      color: $color-white;
-
-      border-width: 1px;
-      border-style: solid;
-      border-color: $color-peach;
-
-      a {
-        color: $color-white;
-      }
-    }
+    --bg: #{$color-light-bg};
+    --text: #{$color-dark-text};
+    --box-bg: #{$color-light-box-bg};
+    --box-text: #{$font-color-light-box-bg};
+    --border: #{$color-peach};
   }
-
   &.dark-mode {
-    background-color: $color-dark-bg;
-    color: $color-dark-text;
-
-    .value-box,
-    .team-card {
-      background-color: $color-dark-box-bg;
-      color: $font-color-dark-box-bg;
-    }
-
-    .cta {
-      background-color: darken($color-peach, 10%);
-      color: $color-white;
-
-      a {
-        color: $color-white;
-      }
-    }
+    --bg: #{$color-dark-bg};
+    --text: #{$color-light-text};
+    --box-bg: #{$color-dark-box-bg};
+    --box-text: #{$font-color-dark-box-bg};
+    --border: #{$color-peach};
   }
 
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: $font-stack;
+
+  // --------------------
+  // Decorative Blobs
+  // --------------------
   .blob {
     position: absolute;
     z-index: 0;
     opacity: 0.15;
-
-    &.top-left {
-      top: -60px;
-      left: -60px;
-      width: 250px;
-    }
-
-    &.bottom-right {
-      bottom: -60px;
-      right: -60px;
-      width: 300px;
-    }
-
-    svg {
-      width: 100%;
-      height: auto;
-    }
+    &.top-left { top: -60px; left: -60px; width: 250px; }
+    &.bottom-right { bottom: -60px; right: -60px; width: 300px; }
+    svg { width: 100%; height: auto; }
   }
 
+  // --------------------
+  // Intro
+  // --------------------
   .intro {
     text-align: center;
     max-width: 800px;
     margin: 0 auto 3rem;
     position: relative;
     z-index: 1;
+    border: 3px solid $color-peach;
+    border-radius: 14px;
+    padding: 1.25rem 1.25rem 1.5rem;
 
-    border-width: 3px;
-    border-style: solid;
-    border-color: $color-peach;
-    border-radius : 15px;
-
-    h1 {
-      font-size: 3rem;
-      margin-bottom: 1rem;
+    &::before, &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 14px;
+      pointer-events: none;
+      z-index: -1;
+    }
+    &::before {
+      transform: translate(10px, 8px) rotate(-1.5deg);
+      border: 3px solid lighten($color-peach, 8%);
+    }
+    &::after {
+      transform: translate(-10px, 12px) rotate(1.2deg);
+      border: 3px dashed rgba($color-peach, 0.7);
     }
 
-    p {
-      font-size: 1.2rem;
-      line-height: 1.6;
-    }
+    h1 { font-size: 3rem; margin-bottom: 0.25rem; }
+    h2 { margin-bottom: 0.75rem; font-weight: 600; letter-spacing: 0.5px; }
+    p { font-size: 1.2rem; line-height: 1.6; }
   }
 
-  .values {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 2rem;
-    margin-bottom: 3rem;
-    position: relative;
-    z-index: 1;
-
-    .value-box {
-      padding: 2rem;
-
-      border-radius: 10px;
-      border-width: 1px;
-      border-style: solid;
-      border-color: $color-peach;
-      border-left: 8px solid $color-peach;
-      
-      transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s, color 0.3s;
-
-      
-      h3 {
-        color: $color-teal;
-        font-size: 1.5rem;
-        margin-bottom: 0.75rem;
-      }
-
-      p {
-        font-size: 1rem;
-      }
-
-      &:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 18px rgba(0, 0, 0, 0.1);
-      }
-    }
-  }
-
+  // --------------------
+  // Team
+  // --------------------
   .team {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -157,84 +91,244 @@
       padding: 1.5rem;
       border-radius: 10px;
       text-align: center;
-      transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s, color 0.3s;
+      background-color: var(--box-bg);
+      color: var(--box-text);
+      border: 1px solid var(--border);
+      transition: transform $transition-speed ease, box-shadow $transition-speed ease;
 
       img {
-        width: 100px;
-        height: 100px;
+        width: 100px; height: 100px;
         object-fit: cover;
         border-radius: 50%;
         margin-bottom: 1rem;
       }
+      h4 { font-size: 1.15rem; margin-bottom: 0.25rem; }
+      span { font-size: 0.9rem; color: rgba(128,128,128,0.9); }
 
-      h4 {
-        font-size: 1.15rem;
-        margin-bottom: 0.25rem;
+      &:hover { transform: translateY(-5px); box-shadow: 0 10px 18px rgba(0,0,0,0.12); }
+    }
+  }
+
+  // --------------------
+  // Classroom Grid
+  // --------------------
+  .classroom-grid {
+    margin: 3rem 0;
+    position: relative;
+    z-index: 1;
+
+    h3 { text-align: center; margin-bottom: 1.5rem; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      grid-auto-rows: 180px;
+      grid-auto-flow: dense;
+      gap: 1rem;
+
+      img {
+        width: 100%; height: 100%;
+        object-fit: cover;
+        border-radius: $border-radius;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        transition: transform $transition-speed ease, box-shadow $transition-speed ease;
+
+        &:hover { transform: scale(1.04); box-shadow: 0 8px 16px rgba(0,0,0,0.2); }
       }
 
-      span {
-        font-size: 0.9rem;
-        color: gray;
+      img:nth-child(2),
+      img:nth-child(5),
+      img:nth-child(8) { grid-row: span 2; }
+      img:nth-child(1),
+      img:nth-child(3),
+      img:nth-child(7) { grid-column: span 2; }
+    }
+  }
+
+  // --------------------
+  // Toppers Carousel
+  // --------------------
+  .toppers-carousel {
+    margin: 3rem 0;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+
+    h3 { margin-bottom: 1rem; }
+
+    .carousel {
+      position: relative;
+      overflow: hidden;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 1.25rem 0 0;
+    }
+
+    .carousel-track {
+      display: flex;
+      transition: transform 0.6s ease-in-out;
+    }
+
+    .carousel-slide {
+      min-width: 100%;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+      position: relative;
+      padding: 0.5rem 0 1rem;
+
+      &::before {
+        content: "";
+        position: absolute;
+        top: 6%;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 62%;
+        height: 78%;
+        border-radius: 24px;
+        background:
+          radial-gradient(60% 60% at 50% 40%, rgba(255,255,255,0.35), transparent 70%),
+          radial-gradient(50% 50% at 50% 50%, rgba($color-glow, 0.35), transparent 75%);
+        filter: blur(18px);
+        opacity: 0.9;
+        z-index: 0;
+      }
+
+      img {
+        position: relative;
+        z-index: 1;
+        width: clamp(240px, 55%, 520px);
+        height: clamp(300px, 50vh, 420px);
+        object-fit: cover;
+        border-radius: 16px;
+        box-shadow: 0 12px 36px rgba(0,0,0,0.35);
+        transition: transform $transition-medium ease;
+      }
+
+      &:hover img { transform: scale(1.02); box-shadow: 0 16px 40px rgba(0,0,0,0.4); }
+
+      .caption {
+        position: relative;
+        z-index: 1;
+        background: rgba(255,255,255,0.08);
+        border: 1px solid var(--border);
+        color: var(--text);
+        backdrop-filter: blur(6px);
+        padding: 0.6rem 1rem;
+        border-radius: 12px;
+        font-size: 0.95rem;
+        line-height: 1.35;
+
+        height: 10rem;
+        width: 10rem;
+      }
+    }
+
+    .nav {
+      position: absolute;
+      top: 80%;
+      transform: translateY(-50%);
+      background: $color-glow;
+      color: var(--box-text);
+      border-radius: 50%;
+      width: 3rem; height: 3rem;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      z-index: 1000;
+      box-shadow: 0 10px 24px rgba(102,170,255,0.35);
+      transition: transform $transition-fast ease, background $transition-fast ease;
+
+      &:hover {
+        background: darken($color-glow, 10%);
+        transform: translateY(-50%) scale(1.08);
+      }
+
+      &.prev { left: clamp(0.5rem, 2vw, 2rem); }
+      &.next { right: clamp(0.5rem, 2vw, 2rem); }
+    }
+  }
+
+  // --------------------
+  // Values
+  // --------------------
+  .values {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 2rem;
+    margin: 3rem 0;
+    position: relative;
+    z-index: 1;
+
+    .value-box {
+      padding: 2rem;
+      background-color: var(--box-bg);
+      color: var(--box-text);
+      border-radius: 10px;
+      border: 1px solid $color-peach;
+      border-left: 8px solid $color-peach;
+      transition: transform $transition-speed ease, box-shadow $transition-speed ease,
+      background-color $transition-speed ease, color $transition-speed ease;
+
+      h3 {
+        color: $color-teal;
+        font-size: 1.5rem;
+        margin-bottom: 0.75rem;
+      }
+      p {
+        font-size: 1rem;
       }
 
       &:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 18px rgba(4, 249, 143, 0.1);
-        border: 1px solid rgba(4, 249, 143, 0.1);
+        transform: translateY(-6px);
+        box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
       }
     }
   }
 
+  // --------------------
+  // CTA (including special course card)
+  // --------------------
   .cta {
     padding: 2rem;
     border-radius: 10px;
     text-align: center;
     position: relative;
     z-index: 1;
-    transition: background 0.3s ease, color 0.3s ease;
+    transition: background $transition-speed ease, color $transition-speed ease;
 
-    p {
-      font-size: 1.2rem;
-      margin: 0;
-
-      a {
-
-        font-weight: bold;
-        text-decoration: underline;
-        transition: color 0.3s ease;
-      }
+    a {
+      font-weight: 700;
+      text-decoration: underline;
+      transition: color $transition-speed ease;
     }
   }
 
-  .course-link-card{
+  .course-link-card {
     height: 2rem;
-    
     padding: 2rem;
     border-radius: 10px;
     border: 2px solid gold;
     text-align: center;
     position: relative;
     z-index: 1;
-    transition: background 0.3s ease, color 0.3s ease;
+    transition: background $transition-speed ease, color $transition-speed ease;
 
     p {
       font-size: 1.2rem;
       margin: 0;
-
-      a {
-        font-weight: bold;
-        text-decoration: underline;
-        transition: color 0.3s ease;
-      }
     }
   }
-  // === ANIMATIONS ===
+
+  // --------------------
+  // Fade-in utility
+  // --------------------
   .fade-in {
     opacity: 0;
     transform: translateY(30px);
     animation: fadeUp 0.6s forwards;
   }
-
   @keyframes fadeUp {
     to {
       opacity: 1;
@@ -242,58 +336,84 @@
     }
   }
 
-  // === RESPONSIVE ===
+
+  // --------------------
+  // Responsive Fixes
+  // --------------------
+  @media (max-width: 1024px) {
+    .classroom-grid .grid {
+      grid-auto-rows: 160px;
+      img:nth-child(1),
+      img:nth-child(3),
+      img:nth-child(7) { grid-column: span 1; }
+      img:nth-child(2),
+      img:nth-child(5),
+      img:nth-child(8) { grid-row: span 1; }
+    }
+    .toppers-carousel .carousel-slide img {
+      width: 70%; height: clamp(260px, 42vh, 360px);
+    }
+  }
+
   @media (max-width: 768px) {
     padding: 2rem 1rem;
 
     .intro {
-      h1 {
-        font-size: 2.2rem;
-      }
-
-      p {
-        font-size: 1.05rem;
-      }
+      h1 { font-size: 2.2rem; }
+      p { font-size: 1.05rem; }
     }
 
-    .team {
+    .team { grid-template-columns: 1fr; }
+
+    .classroom-grid .grid {
       grid-template-columns: 1fr;
+      grid-auto-rows: 200px;
+      img { grid-column: span 1 !important; grid-row: span 1 !important; }
     }
 
-    .values {
-      grid-template-columns: 1fr;
+    .toppers-carousel {
+      .carousel-slide img {
+        width: 88%;
+        height: clamp(220px, 40vh, 320px);
+      }
+      .carousel-slide::before { width: 75%; height: 65%; }
     }
+      .caption{
+        height: 7.5rem;
+        width: 7.5rem;
+      }
+        .values { grid-template-columns: 1fr; }
 
     .cta {
       padding: 1.5rem;
-
-      p {
-        font-size: 1rem;
-      }
+      p { font-size: 1rem; }
     }
 
-
-  .course-link-card{
-    height: 2rem;
-
-    border-radius: 20px;
-    border: 2px solid gold;
-    text-align: center;
-    position: relative;
-    z-index: 1;
-    transition: background 0.3s ease, color 0.3s ease;
-
-    p {
-      font-size: 1.2rem;
-      margin: 0;
-
-      a {
-
-        font-weight: bold;
-        text-decoration: underline;
-        transition: color 0.3s ease;
-      }
+    .course-link-card {
+      border-radius: 20px;
     }
   }
+
+  @media (max-width: 480px) {
+    .classroom-grid .grid { grid-auto-rows: 160px; }
+    .toppers-carousel .carousel-slide img {
+      width: 95%; height: 220px;
+
+      .caption{
+        height: 5rem;
+        width: 5rem;
+      }
+    }
+
+    .values { grid-template-columns: 1fr; }
+
+    .cta {
+      padding: 1.5rem;
+      p { font-size: 1rem; }
+    }
+
+    .course-link-card {
+      border-radius: 20px;
+    }
   }
 }

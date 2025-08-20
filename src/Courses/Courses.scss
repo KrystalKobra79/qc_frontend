@@ -4,7 +4,7 @@
 :root {
   --bg-color: #{$color-light-bg};
   --text-color: #{$color-dark-text};
-  --card-bg: #{$color-light-text};
+  --card-bg: #{$color-light-box-bg};
   --border-color: #{$color-border};
   --glow: #{$color-glow};
 }
@@ -12,8 +12,8 @@
 body.dark-mode {
   --bg-color: #{$color-dark-bg};
   --text-color: #{$color-light-text};
-  --card-bg: #2a2a2a;
-  --border-color: #3a3a3a;
+  --card-bg: #{$color-dark-bg-sex-B};
+  --border-color: #{$color-dark-bg-sex-A};
   --glow: #{$color-glow}; // same glow color in both themes
 }
 
@@ -27,7 +27,7 @@ body.dark-mode {
 }
 
 @mixin neon-glow($c) {
-  box-shadow: 0 0 18px $c, 0 0 36px rgba(102, 170, 255, 0.55);
+  box-shadow: 0 0 1.75rem $c, 0 0 1.95rem rgba(102, 170, 255, 0.55);
 }
 
 // Breakpoints
@@ -87,7 +87,7 @@ $bp-laptop: 1024px;
       }
     }
     .course-search{
-      width: 70%;
+      width: 89%; //important nigger
     }
 
     @media (min-width: $bp-tablet) {
@@ -149,7 +149,9 @@ $bp-laptop: 1024px;
       position: absolute;
       inset: 0;
       padding: 1rem;
-      border-radius: 14px;
+
+      border-radius: 1.75rem;
+
       border: 1px solid var(--border-color);
       background: var(--card-bg);
       color: var(--text-color);
@@ -203,9 +205,10 @@ $bp-laptop: 1024px;
     // Float + glow on hover (laptop/desktop only; skip touch devices)
     @media (hover: hover) and (min-width: $bp-laptop) {
       &:hover {
+        border-radius: 1.75rem;
         transform: translateY(-8px) scale(1.015);
         @include neon-glow(var(--glow));
-        border-color: var(--glow);
+        //border-color: var(--glow);
       }
     }
   }

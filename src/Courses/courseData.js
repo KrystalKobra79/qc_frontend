@@ -2,12 +2,14 @@
 const courseData = [
   // ================== CBSE ==================
   // --- Class VII ---
+  
+  //Done
   {
     id: 'cbse-vii-physics',
     title: 'Physics',
     class: 'VII',
     board: 'CBSE',
-    syllabus: ['Motion and Time', 'Heat', 'Light', 'Electricity and Magnetism'],
+    syllabus: ['Physical Quantities And Their Measurements', 'Motion', 'Energy', 'Light', 'Heat' , 'Sound', 'Electricity'],
   },
   {
     id: 'cbse-vii-chemistry',
@@ -23,12 +25,13 @@ const courseData = [
     board: 'CBSE',
     syllabus: ['Nutrition in Plants', 'Respiration in Organisms', 'Transportation in Animals and Plants'],
   },
+  // Done
   {
     id: 'cbse-vii-maths',
     title: 'Mathematics',
     class: 'VII',
     board: 'CBSE',
-    syllabus: ['Integers', 'Fractions and Decimals', 'Simple Equations', 'Geometry Basics'],
+    syllabus: ['Number System', 'Algebra', 'Arithmetics', 'Geometry', 'Mensuration', 'Statistics', 'Co-ordinate Geometry', 'Set Theory'],
   },
   {
     id: 'cbse-vii-compsci',

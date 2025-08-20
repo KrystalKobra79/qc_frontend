@@ -1,18 +1,98 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './About.scss';
-import { FaBookOpen, FaRegDotCircle } from 'react-icons/fa';
+import { FaBookOpen, FaRegDotCircle, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { Link } from "react-router-dom";
 
 import teacher1 from "../assets/teacher1.jpg";
 import teacher2 from "../assets/teacher2.jpg";
 
+import classroom1 from "../assets/classroom1.jpg";
+import classroom2 from "../assets/classroom2.jpg";
+import classroom3 from "../assets/classroom3.jpg";
+import classroom4 from "../assets/classroom4.jpg";
+import classroom5 from "../assets/classroom5.jpg";
+import classroom6 from "../assets/classroom6.jpg";
+import classroom7 from "../assets/classroom7.jpg";
+import classroom8 from "../assets/classroom8.jpg";
 
+import student1 from "../assets/student1.jpg";
+import student2 from "../assets/student2.jpg";
+import student3 from "../assets/student3.jpg";
+import student4 from "../assets/student4.jpg";
+import student5 from "../assets/student5.jpg";
+import student6 from "../assets/student6.jpg";
+import student7 from "../assets/student7.jpg";
+import student8 from "../assets/student8.jpg";
+
+const toppers = [
+  { img: student1, name: "Snehasish Saha", board: "ICSE", class: "10", percentage: "95%" },
+  { img: student2, name: "Riya Sen", board: "CBSE", class: "12", percentage: "92%" },
+  { img: student3, name: "Arjun Das", board: "ICSE", class: "9", percentage: "91%" },
+  { img: student4, name: "Priya Sharma", board: "CBSE", class: "11", percentage: "94%" },
+  { img: student5, name: "Rahul Mehta", board: "ICSE", class: "8", percentage: "90%" },
+  { img: student6, name: "Ananya Gupta", board: "CBSE", class: "10", percentage: "96%" },
+  { img: student7, name: "Souvik Chatterjee", board: "ICSE", class: "12", percentage: "93%" },
+  { img: student8, name: "Meera Iyer", board: "CBSE", class: "9", percentage: "91%" }
+];
+
+const classroomImages = [
+  classroom1, classroom2, classroom3, classroom4,
+  classroom5, classroom6, classroom7, classroom8
+];
 
 const About = ({ theme }) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const timeoutRef = useRef(null);
+
+  // Swipe gesture refs
+  const startX = useRef(0);
+  const endX = useRef(0);
+
+  // Auto-play
+  useEffect(() => {
+    resetTimeout();
+    timeoutRef.current = setTimeout(
+      () => setCurrentIndex((prev) => (prev === toppers.length - 1 ? 0 : prev + 1)),
+      3000
+    );
+    return () => resetTimeout();
+  }, [currentIndex]);
+
+  const resetTimeout = () => {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+  };
+
+  const nextSlide = () => {
+    setCurrentIndex((prev) => (prev === toppers.length - 1 ? 0 : prev + 1));
+  };
+
+  const prevSlide = () => {
+    setCurrentIndex((prev) => (prev === 0 ? toppers.length - 1 : prev - 1));
+  };
+
+  // Swipe handling
+  const handleTouchStart = (e) => {
+    startX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchMove = (e) => {
+    endX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = () => {
+    if (startX.current - endX.current > 50) {
+      nextSlide();
+    }
+    if (endX.current - startX.current > 50) {
+      prevSlide();
+    }
+    startX.current = 0;
+    endX.current = 0;
+  };
+
   return (
     <div className={`about-page ${theme}`}>
       {/* Decorative SVG Blobs */}
-      {/* Decorative blobs */}
       <div className="blob top-left">
         <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" fill="#54A39F">
           <path d="M43.4,-74.1C56.7,-63.6,69.3,-53.7,74.6,-40.8C79.9,-27.8,77.8,-11.9,75.5,4.7C73.2,21.3,70.7,38.6,60.6,49.6C50.6,60.7,32.9,65.6,15.7,70.6C-1.6,75.6,-18.3,80.7,-30.2,74.3C-42.2,67.9,-49.5,50.1,-57.2,35.1C-64.9,20.1,-73.1,7.8,-70.4,-2.6C-67.6,-13,-53.9,-21.4,-43.2,-33.6C-32.6,-45.8,-24.9,-61.9,-12.7,-72C-0.5,-82.2,16.2,-86.3,30.2,-79.2C44.2,-72.1,56,-53.7,43.4,-74.1Z" transform="translate(100 100)" />
@@ -25,82 +105,106 @@ const About = ({ theme }) => {
         </svg>
       </div>
 
-
       {/* Intro Section */}
       <section className="intro fade-in">
         <h1>About Us</h1>
         <h2>Quantum Classes&trade;</h2>
-        <p>
-          A premium insititute for CBSE and ICSE Students.
-        </p>
+        <p>A premium institute for CBSE and ICSE Students.</p>
       </section>
 
       {/* Team Section */}
-        
-        <section className="team fade-in">
-        
-          <div className="team-card">
-            <img src={teacher1} alt="Alok Dey" /> 
-            <h4>Alok Dey</h4>
-            <span>Head Teacher</span>
+      <section className="team fade-in">
+        <div className="team-card">
+          <img src={teacher1} alt="Alok Dey" />
+          <h4>Alok Dey</h4>
+          <span>Founder</span>
+        </div>
+
+        <div className="team-card">
+          <img src={teacher2} alt="John Smith" />
+          <h4>John Smith</h4>
+          <span>Associate Teacher</span>
+        </div>
+      </section>
+
+      {/* Classroom & Curriculum Grid */}
+      <section className="classroom-grid fade-in">
+        <h3>Our Classrooms & Curriculum</h3>
+        <div className="grid">
+          {classroomImages.map((img, i) => (
+            <img src={img} alt={`Classroom ${i + 1}`} key={i} />
+          ))}
+        </div>
+      </section>
+
+      {/* Toppers Carousel */}
+      <section className="toppers-carousel fade-in">
+        <h3>Previous Year Toppers</h3>
+        <div 
+          className="carousel"
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+        >
+          <button className="nav prev" onClick={prevSlide}>
+            <FaChevronLeft />
+          </button>
+
+          <div className="carousel-track" style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
+            {toppers.map((topper, i) => (
+              <div className="carousel-slide" key={i}>
+                <img src={topper.img} alt={`Topper ${i + 1}`} />
+                <div className="caption">
+                  <p><strong>Name:</strong> {topper.name}</p>
+                  <p><strong>Board:</strong> {topper.board}</p>
+                  <p><strong>Class:</strong> {topper.class}</p>
+                  <p><strong>Percentage:</strong> {topper.percentage}</p>
+                </div>
+              </div>
+            ))}
           </div>
 
-          <div className="team-card">
-            <img src={teacher2} alt="John Smith" />
-            <h4>John Smith</h4>
-            <span>Founder</span>
-          </div>
-
-        </section>
+          <button className="nav next" onClick={nextSlide}>
+            <FaChevronRight />
+          </button>
+        </div>
+      </section>
 
       {/* Values Section */}
       <section className="values fade-in">
-
         <div className="value-box">
           <h3>Strong Faculty</h3>
-          <p>Quantum Classes&trade; boasts a strong and knowledgable faculty.</p>
+          <p>Quantum Classes&trade; boasts a strong and knowledgeable faculty.</p>
         </div>
-
         <div className="value-box">
           <h3>Expert Guidance</h3>
           <p>We provide extensive curriculum coverage and encourage students to interact and ask questions.</p>
         </div>
-
         <div className="value-box">
           <h3>Long-standing Experience</h3>
           <p>Over 20 years of experience being a professor.</p>
           <p>B.Sc (Hons.) in Mathematics</p>
           <p>Former Professor at St. Xavier's Institute</p>
         </div>
-
         <div className="value-box">
           <h3>Why choose us?</h3>
-          <p> <FaRegDotCircle/> Digital Classroom</p>
-          <p> <FaRegDotCircle/> Strong faculty</p>
-          <p> <FaRegDotCircle/> Doubt-clearing sessions</p>
-          <p> <FaRegDotCircle/> Regular Mock Tests</p>
-          
+          <p><FaRegDotCircle /> Digital Classroom</p>
+          <p><FaRegDotCircle /> Strong faculty</p>
+          <p><FaRegDotCircle /> Doubt-clearing sessions</p>
+          <p><FaRegDotCircle /> Regular Mock Tests</p>
         </div>
-        
       </section>
 
-
-      
-      
       {/* CTA Section */}
-
       <section className="cta fade-in course-link-card">
         <p>
           <Link to={"/courses"}>
-            <FaBookOpen/>   Check out our Courses
+            <FaBookOpen /> Check out our Courses
           </Link>
-          
         </p>
       </section>
       <section className="cta fade-in">
-        <p>
-          Ready to start your academic journey?
-        </p>
+        <p>Ready to start your academic journey?</p>
         <Link to={"/enquiry"}>Contact us today</Link>
         <p>and take the first step.</p>
       </section>
@@ -109,6 +213,3 @@ const About = ({ theme }) => {
 };
 
 export default About;
-
-
-
