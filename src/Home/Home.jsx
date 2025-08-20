@@ -1,6 +1,8 @@
 //Home.jsx
 
 import QuantumClasses from "../assets/QuantumClasses.webp";
+import teacher1 from "../assets/teacher1.jpg";
+import teacher2 from "../assets/teacher2.jpg";
 
 import React from "react";
 import { Link } from "react-router-dom";
@@ -14,6 +16,7 @@ const Home = () => {
     <div className="home-page">
       {/* === HERO SECTION === */}
       <section className="hero-section">
+
         <div className="hero-image">
           <img
             src={QuantumClasses}
@@ -21,36 +24,66 @@ const Home = () => {
             className="hero-img"
           />
         </div>
+
         <div className="hero-info">
+
           <h1 className="hero-title slide-up">Join Quantum Classes&trade; now!</h1>
           <p className="hero-subtitle slide-up">
           Quantum Classes&trade; : A premium institute for CBSE & ICSE students from classes VII-XII.
           </p>
-          <div className="hero-buttons slide-up">
-            <Link to="/courses" className="btn primary">Explore Courses</Link>
-            <br/>
-            <Link to="/about" className="btn secondary">About Us</Link>
+          
+          <div className="address-card">
+            <p className="hero-subtitle slide-up">
+              <MdOutlineLocationOn /> Quantum Classes, <br/> 1 No. Bijay Nagar, Madhyamgram, <br/>Kolkata - 7000129, India
+            </p>
           </div>
+          
+          <div className="hero-buttons slide-up">
+            <Link to={"/courses"} className="btn primary">Explore Courses</Link>
+            <br/>
+            <Link to={"/about"} className="btn secondary">About Us</Link>
+          </div>
+
         </div>
+
       </section>
 
       {/* === TEACHER SECTION === */}
+      
       <section className="teacher-section">
-        <div className="teacher-info slide-up">
+        {/* Alok Dey */}
+           <div className="teacher-info slide-up">
           <h2><FaChalkboardTeacher /> Main Teacher</h2>
           <p>
-            <strong>Prof. Alok Dey</strong><br />
+            <strong>Alok Dey</strong><br />
             B.Sc (Honors) in Mathematics, 20+ years of teaching experience.<br />
-            <MdOutlineLocationOn /> Quantum Classes, <br/> 1 No. Bijay Nagar, Madhyamgram, <br/>Kolkata - 7000129, India
           </p>
         </div>
         <div className="teacher-image slide-up">
           <img
-            src={QuantumClasses}
+            src={teacher1}
             alt="Main Teacher"
             className="teacher-img"
           />
         </div>
+       
+        {/* Founder */}
+        <div className="teacher-info slide-up">
+          <h2><FaChalkboardTeacher /> Founder</h2>
+          <p>
+            <strong>Alok Dey - [Partner]</strong><br />
+            B.Sc (Honors) in Mathematics, 20+ years of teaching experience.<br />
+            
+          </p>
+        </div>
+        <div className="teacher-image slide-up">
+          <img
+            src={teacher2}
+            alt="Founder"
+            className="teacher-img"
+          />
+        </div>
+        
       </section>
 
       {/* === COURSES SECTION === */}
@@ -70,7 +103,7 @@ const Home = () => {
       <section className="cta-section slide-up">
         <h2>Start Your Learning Journey Today!</h2>
         <p>Contact us now and join thousands of students achieving their dreams.</p>
-        <Link to="/enquiry" className="btn primary">Contact</Link>
+        <Link to={"/enquiry"} className="btn primary">Contact</Link>
       </section>
     </div>
   );

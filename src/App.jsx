@@ -2,11 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import NavBar from './NavBar/NavBar';
-
-// import Courses from './Courses/Courses';
 import Courses from './Courses/Courses';
-
-// import About from './About_Us/About';
 import About from './About/About';
 import Enquiry from './Enquiry/Enquiry';
 import Home from './Home/Home';

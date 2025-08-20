@@ -1,6 +1,11 @@
 import React from 'react';
 import './About.scss';
-import { FaBookOpen } from 'react-icons/fa';
+import { FaBookOpen, FaRegDotCircle } from 'react-icons/fa';
+import { Link } from "react-router-dom";
+
+import teacher1 from "../assets/teacher1.jpg";
+import teacher2 from "../assets/teacher2.jpg";
+
 
 
 const About = ({ theme }) => {
@@ -30,8 +35,32 @@ const About = ({ theme }) => {
         </p>
       </section>
 
+      {/* Team Section */}
+        
+        <section className="team fade-in">
+        
+          <div className="team-card">
+            <img src={teacher1} alt="Alok Dey" /> 
+            <h4>Alok Dey</h4>
+            <span>Head Teacher</span>
+          </div>
+
+          <div className="team-card">
+            <img src={teacher2} alt="John Smith" />
+            <h4>John Smith</h4>
+            <span>Founder</span>
+          </div>
+
+        </section>
+
       {/* Values Section */}
       <section className="values fade-in">
+
+        <div className="value-box">
+          <h3>Strong Faculty</h3>
+          <p>Quantum Classes&trade; boasts a strong and knowledgable faculty.</p>
+        </div>
+
         <div className="value-box">
           <h3>Expert Guidance</h3>
           <p>We provide extensive curriculum coverage and encourage students to interact and ask questions.</p>
@@ -40,48 +69,40 @@ const About = ({ theme }) => {
         <div className="value-box">
           <h3>Long-standing Experience</h3>
           <p>Over 20 years of experience being a professor.</p>
+          <p>B.Sc (Hons.) in Mathematics</p>
+          <p>Former Professor at St. Xavier's Institute</p>
         </div>
 
         <div className="value-box">
           <h3>Why choose us?</h3>
-          <p>B.Sc (Hons.) in Mathematics</p>
-          <p>Former Professor at St. Xavier's Institute</p>
+          <p> <FaRegDotCircle/> Digital Classroom</p>
+          <p> <FaRegDotCircle/> Strong faculty</p>
+          <p> <FaRegDotCircle/> Doubt-clearing sessions</p>
+          <p> <FaRegDotCircle/> Regular Mock Tests</p>
+          
         </div>
         
       </section>
 
-        {/* 
-        <section className="team fade-in">
-        <div className="team-card">
-          
-          <img src={member1} alt="Jane Doe" /> 
-          <h4>Jane Doe</h4>
-          <span>Nutritionist</span>
-        </div>
-        <div className="team-card">
-          <img src={member1} alt="Jane Doe" />
-          <h4>John Smith</h4>
-          <span>Yoga Coach</span>
-        </div>
-        <div className="team-card">
-          <img src={member1} alt="Jane Doe" />
-          <h4>Sara Lee</h4>
-          <span>Therapist</span>
-        </div>
-      </section> */}
-      {/* Team Section */}
+
+      
       
       {/* CTA Section */}
 
       <section className="cta fade-in course-link-card">
         <p>
-        <a href="/courses"> <FaBookOpen/>   Check out our Courses</a>
+          <Link to={"/courses"}>
+            <FaBookOpen/>   Check out our Courses
+          </Link>
+          
         </p>
       </section>
       <section className="cta fade-in">
         <p>
-          Ready to start your academic journey? <a href="/enquiry">Contact us today</a> and take the first step.
+          Ready to start your academic journey?
         </p>
+        <Link to={"/enquiry"}>Contact us today</Link>
+        <p>and take the first step.</p>
       </section>
     </div>
   );

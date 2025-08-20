@@ -1,12 +1,5 @@
-// === COLOR VARIABLES ===
-$color-light-bg: blanchedalmond;
-$color-dark-bg: #1e1e1e;
-$color-light-text: #f5f5f5;
-$color-dark-text: #1a1a1a;
-$color-glow: #66aaff;
-$color-border: #cccccc;
-$transition-speed: 0.3s;
-$blur-background: rgba(0, 0, 0, 0.2);
+@import '../GlobalVariables.scss';
+
 
 // === HERO SECTION ===
 .hero-section {
@@ -36,6 +29,26 @@ $blur-background: rgba(0, 0, 0, 0.2);
 
   .hero-info {
     max-width: 500px;
+    border-width: 0.25rem;
+    border-style: solid;
+    border-color: $color-peach;
+    border-left: 0.85rem solid $color-peach;
+    border-radius: 0.85rem;
+    padding: 3rem 1.5rem;
+
+    overflow: hidden;
+
+    .address-card{
+      font-size: 1.5rem;
+      font-weight: bold;
+
+      border-radius: 0.45rem;
+      padding: 0.75rem;
+      
+      background-color: $color-peach;
+      color: $color-dark-text;
+    }
+
   }
 }
 
@@ -53,6 +66,8 @@ $blur-background: rgba(0, 0, 0, 0.2);
   .teacher-info {
     max-width: 500px;
     text-align: center;
+    display: flex;
+    flex-direction: column;
   }
 
   .teacher-image {

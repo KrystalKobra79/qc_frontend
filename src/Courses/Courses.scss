@@ -1,15 +1,4 @@
-// ===============================
-// Global theme tokens (SCSS -> CSS variables)
-// ===============================
-$color-light-bg: blanchedalmond;
-$color-dark-bg: #1e1e1e;
-$color-light-text: #f5f5f5;
-$color-dark-text: #1a1a1a;
-$color-glow: #66aaff;
-$color-border: #cccccc;
-
-$transition-fast: 0.25s;
-$transition-medium: 0.5s;
+@import '../GlobalVariables.scss';
 
 // Expose theme as CSS variables so Navbar's body.dark-mode toggle works everywhere
 :root {
